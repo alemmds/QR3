@@ -2,66 +2,73 @@ body {
     font-family: Arial, sans-serif;
     padding: 20px;
     background-color: #f9f9f9;
+    margin: 0;
 }
 
 h1 {
     color: #333;
+    text-align: center;
 }
 
 .mesas-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
     gap: 20px;
-    flex-wrap: wrap;
 }
 
 .mesa {
     background-color: #fff;
     border: 1px solid #ddd;
     padding: 20px;
-    width: 30%;
+    width: 90%;
+    max-width: 400px; /* Limita a largura máxima para dispositivos grandes */
     box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    border-radius: 8px; /* Bordas arredondadas */
 }
 
 input {
     display: block;
     margin: 10px 0;
-    padding: 5px;
-    width: 100%;
-    box-sizing: border-box;
+    padding: 10px; /*
+
+ Aumenta a área clicável */
+    width: calc(100% - 22px); /* Responsivo */
+    border: 1px solid #ddd;
+    border-radius: 5px; /* Bordas arredondadas */
 }
 
 button {
-    background-color: #4CAF50;
+    padding: 10px 15px;
+    background-color: #4CAF50; /* Verde */
     color: white;
-    padding: 10px;
     border: none;
+    border-radius: 5px; /* Bordas arredondadas */
     cursor: pointer;
+    font-size: 16px; /* Aumenta a fonte */
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #45a049; /* Verde escuro ao passar o mouse */
 }
 
 .qrcode {
-    margin-top: 10px;
-    display: none;
+    margin-top: 15px; /* Margem superior */
+    text-align: center; /* Centraliza o QR Code */
 }
 
 .resumo-link {
-
-
     display: block;
     margin-top: 10px;
-    color: #4CAF50;
-    text-decoration: none;
+    color: #4CAF50; /* Verde */
+    text-decoration: none; /* Remove o sublinhado */
 }
 
 .resumo-link:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Sublinhado ao passar o mouse */
 }
 
 .total {
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 20px; /* Espaçamento superior */
 }
