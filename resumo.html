@@ -24,7 +24,7 @@
 
             pedido.forEach(item => {
                 const li = document.createElement('li');
-                li.innerText = `${item.quantidade}x ${item.item} - R$${item.preco.toFixed(2)} (Total: R$${(item.preco * item.quantidade).toFixed(2)})`;
+                li.textContent = `${item.quantidade}x ${item.item} - R$${(item.preco * item.quantidade).toFixed(2)}`;
                 lista.appendChild(li);
                 total += item.preco * item.quantidade;
             });
@@ -32,7 +32,7 @@
             document.getElementById('total').innerText = total.toFixed(2);
         }
 
-        carregarPedido();
+        window.onload = carregarPedido;
     </script>
 </body>
 </html>
