@@ -93,13 +93,13 @@
             pedido.forEach(item => total += item.preco * item.quantidade);
 
             if (total > 0) {
-                const linkResumo = `resumo.html?mesa=${mesa}`;
+                const linkResumo = `resumo.html?mesa=${mesa}`; // Link correto com o número da mesa
                 document.getElementById(`resumo${mesa}`).href = linkResumo;
                 document.getElementById(`resumo${mesa}`).style.display = "block"; // Exibe o link
 
                 const qrContainer = document.getElementById(`qrcode${mesa}`);
-                qrContainer.innerHTML = '';
-                new QRCode(qrContainer, linkResumo);
+                qrContainer.innerHTML = ''; // Limpa QRCode anterior, se houver
+                new QRCode(qrContainer, linkResumo); // Gera o novo QRCode
                 qrContainer.style.display = "block"; // Exibe o QR Code
             } else {
                 document.getElementById(`resumo${mesa}`).style.display = "none";
