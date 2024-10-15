@@ -15,7 +15,7 @@
     <script>
         function carregarPedido() {
             const urlParams = new URLSearchParams(window.location.search);
-            const mesa = urlParams.get('mesa');
+            const mesa = urlParams.get('mesa'); // Obtém o número da mesa da URL
             document.getElementById('mesa-numero').innerText = mesa;
 
             const pedido = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
@@ -36,4 +36,3 @@
     </script>
 </body>
 </html>
-
