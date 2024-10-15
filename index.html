@@ -93,7 +93,7 @@
             pedido.forEach(item => total += item.preco * item.quantidade);
 
             if (total > 0) {
-                const linkResumo = `resumo.html?mesa=${mesa}`; // Link correto com o número da mesa
+                const linkResumo = `https://seu-usuario.github.io/panificadora-bacanga/resumo.html?mesa=${mesa}`; // Caminho absoluto
                 document.getElementById(`resumo${mesa}`).href = linkResumo;
                 document.getElementById(`resumo${mesa}`).style.display = "block"; // Exibe o link
 
