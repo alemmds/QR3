@@ -1,82 +1,67 @@
-/* Estilo Base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
     padding: 20px;
-}
-h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
+    background-color: #f9f9f9;
 }
 
-/* Layout Responsivo das Mesas */
+h1 {
+    color: #333;
+}
+
 .mesas-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
-/* Estilo das Mesas */
 .mesa {
-    background-color: white;
-    border: 2px solid #ddd;
-    border-radius: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
     padding: 20px;
-    width: 300px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-.mesa:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-}
-.mesa input {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: calc(100% - 22px);
+    width: 30%;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
 }
 
-/* Botão Adicionar Item */
-.mesa button {
-    background-color: #28a745;
+input {
+    display: block;
+    margin: 10px 0;
+    padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
     color: white;
+    padding: 10px;
     border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-.mesa button:hover {
-    background-color: #218838;
 }
 
-/* QR Code e Resumo Link */
+button:hover {
+    background-color: #45a049;
+}
+
 .qrcode {
     margin-top: 10px;
     display: none;
 }
+
 .resumo-link {
-    display: none;
+
+
+    display: block;
     margin-top: 10px;
+    color: #4CAF50;
     text-decoration: none;
-    color: #007bff;
 }
+
 .resumo-link:hover {
     text-decoration: underline;
 }
 
-/* Estilo do Resumo */
 .total {
-    font-size: 1.2rem;
     font-weight: bold;
     margin-top: 20px;
 }
