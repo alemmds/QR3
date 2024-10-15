@@ -93,7 +93,8 @@
             pedido.forEach(item => total += item.preco * item.quantidade);
 
             if (total > 0) {
-                const linkResumo = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`; // Atualizando o caminho absoluto
+                // Gera o link correto para o resumo de acordo com a mesa
+                const linkResumo = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`;
                 document.getElementById(`resumo${mesa}`).href = linkResumo;
                 document.getElementById(`resumo${mesa}`).style.display = "block"; // Exibe o link
 
