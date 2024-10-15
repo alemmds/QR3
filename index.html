@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panificadora Bacanga - Pedidos</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Incluindo o CSS -->
+</head>
+<body>
+    <h1>Panificadora Bacanga - Pedidos</h1>
+    <div class="mesas-container">
+        <!-- Mesa 1 -->
+        <div class="mesa" id="mesa1">
+            <h2>Mesa 1</h2>
+            <input type="text" placeholder="Item" id="item1">
+            <input type="number" placeholder="Preço" id="preco1">
+            <input type="number" placeholder="Quantidade" id="quantidade1">
+            <button onclick="adicionarItem(1)">Adicionar Item</button>
+            <div class="qrcode" id="qrcode1"></div>
+            <a class="resumo-link" id="resumo1" target="_blank">Ver Resumo da Mesa 1</a>
+        </div>
+        
+        <!-- Mesa 2 -->
+        <div class="mesa" id="mesa2">
+            <h2>Mesa 2</h2>
+            <input type="text" placeholder="Item" id="item2">
+            <input type="number" placeholder="Preço" id="preco2">
+            <input type="number" placeholder="Quantidade" id="quantidade2">
+            <button onclick="adicionarItem(2)">Adicionar Item</button>
+            <div class="qrcode" id="qrcode2"></div>
+            <a class="resumo-link" id="resumo2" target="_blank">Ver Resumo da Mesa 2</a>
+        </div>
+
+        <!-- Mesa 3 -->
+        <div class="mesa" id="mesa3">
+            <h2>Mesa 3</h2>
+            <input type="text" placeholder="Item" id="item3">
+            <input type="number" placeholder="Preço" id="preco3">
+            <input type="number" placeholder="Quantidade" id="quantidade3">
+            <button onclick="adicionarItem(3)">Adicionar Item</button>
+            <div class="qrcode" id="qrcode3"></div>
+            <a class="resumo-link" id="resumo3" target="_blank">Ver Resumo da Mesa 3</a>
+        </div>
+
+        <!-- Mesa 4 -->
+        <div class="mesa" id="mesa4">
+            <h2>Mesa 4</h2>
+            <input type="text" placeholder="Item" id="item4">
+            <input type="number" placeholder="Preço" id="preco4">
+            <input type="number" placeholder="Quantidade" id="quantidade4">
+            <button onclick="adicionarItem(4)">Adicionar Item</button>
+            <div class="qrcode" id="qrcode4"></div>
+            <a class="resumo-link" id="resumo4" target="_blank">Ver Resumo da Mesa 4</a>
+        </div>
+
+        <!-- Mesa 5 -->
+        <div class="mesa" id="mesa5">
+            <h2>Mesa 5</h2>
+            <input type="text" placeholder="Item" id="item5">
+            <input type="number" placeholder="Preço" id="preco5">
+            <input type="number" placeholder="Quantidade" id="quantidade5">
+            <button onclick="adicionarItem(5)">Adicionar Item</button>
+            <div class="qrcode" id="qrcode5"></div>
+            <a class="resumo-link" id="resumo5" target="_blank">Ver Resumo da Mesa 5</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        function adicionarItem(mesa) {
+            const item = document.getElementById(`item${mesa}`).value;
+            const preco = parseFloat(document.getElementById(`preco${mesa}`).value);
+            const quantidade = parseInt(document.getElementById(`quantidade${mesa}`).value);
+
+            if (!item || !preco || !quantidade || quantidade <= 0) {
+                alert("Preencha todos os campos corretamente.");
+                return;
+            }
+
+            const pedidoAtual = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
+            pedidoAtual.push({ item, preco, quantidade });
+            localStorage.setItem(`mesa${mesa}`, JSON.stringify(pedidoAtual));
+
+            gerarQRCode(mesa);
+            document.getElementById(`item${mesa}`).value = '';
+            document.getElementById(`preco${mesa}`).value = '';
+            document.getElementById(`quantidade${mesa}`).value = '';
+        }
+
+        function gerarQRCode(mesa) {
+            const pedido = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
+            let total = 0;
+            pedido.forEach(item => total += item.preco * item.quantidade);
+
+            if (total > 0) {
+                const linkResumo = `resumo.html?mesa=${mesa}`;
+                document.getElementById(`resumo${mesa}`).href = linkResumo;
+                document.getElementById(`resumo${mesa}`).style.display = "block";
+
+                const qrContainer = document.getElementById(`qrcode${mesa}`);
+                qrContainer.innerHTML = '';
+                new QRCode(qrContainer, linkResumo);
+                qrContainer.style.display = "block";
+            } else {
+                document.getElementById(`resumo${mesa}`).style.display = "none";
+                document.getElementById(`qrcode${mesa}`).style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
