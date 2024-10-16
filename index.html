@@ -1,77 +1,75 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mesas da Lanchonete Bacanga</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="qrcode.min.js"></script> <!-- Importando a biblioteca QR Code -->
+    <script src="qrcode.min.js"></script>
+    <script src="script.js" defer></script>
+    <title>Mesas da Lanchonete Bacanga</title>
 </head>
 <body>
-    <h1>Mesas da Lanchonete Bacanga</h1>
-    
-    <div class="mesa-container">
-        <!-- Mesa 1 -->
-        <div class="mesa">
-            <h2>Mesa 1</h2>
-            <input type="text" id="nome-produto1" placeholder="Nome do produto">
-            <input type="number" id="valor-produto1" placeholder="Valor">
-            <input type="number" id="quantidade-produto1" placeholder="Quantidade">
-            <button onclick="adicionarPedido(1)">Adicionar</button>
-            <p id="mesa1-total">Total: R$ 0,00</p>
-            <div id="mesa1-qrcode" style="display:none;"></div> <!-- QR Code -->
-            <button onclick="limparMesa(1)">Limpar</button>
-        </div>
-
-        <!-- Mesa 2 -->
-        <div class="mesa">
-            <h2>Mesa 2</h2>
-            <input type="text" id="nome-produto2" placeholder="Nome do produto">
-            <input type="number" id="valor-produto2" placeholder="Valor">
-            <input type="number" id="quantidade-produto2" placeholder="Quantidade">
-            <button onclick="adicionarPedido(2)">Adicionar</button>
-            <p id="mesa2-total">Total: R$ 0,00</p>
-            <div id="mesa2-qrcode" style="display:none;"></div> <!-- QR Code -->
-            <button onclick="limparMesa(2)">Limpar</button>
-        </div>
-
-        <!-- Mesas 3 a 5 seguem o mesmo formato -->
-        <div class="mesa">
-            <h2>Mesa 3</h2>
-            <input type="text" id="nome-produto3" placeholder="Nome do produto">
-            <input type="number" id="valor-produto3" placeholder="Valor">
-            <input type="number" id="quantidade-produto3" placeholder="Quantidade">
-            <button onclick="adicionarPedido(3)">Adicionar</button>
-            <p id="mesa3-total">Total: R$ 0,00</p>
-            <div id="mesa3-qrcode" style="display:none;"></div> <!-- QR Code -->
-            <button onclick="limparMesa(3)">Limpar</button>
-        </div>
-
-        <!-- Mesa 4 -->
-        <div class="mesa">
-            <h2>Mesa 4</h2>
-            <input type="text" id="nome-produto4" placeholder="Nome do produto">
-            <input type="number" id="valor-produto4" placeholder="Valor">
-            <input type="number" id="quantidade-produto4" placeholder="Quantidade">
-            <button onclick="adicionarPedido(4)">Adicionar</button>
-            <p id="mesa4-total">Total: R$ 0,00</p>
-            <div id="mesa4-qrcode" style="display:none;"></div> <!-- QR Code -->
-            <button onclick="limparMesa(4)">Limpar</button>
-        </div>
-
-        <!-- Mesa 5 -->
-        <div class="mesa">
-            <h2>Mesa 5</h2>
-            <input type="text" id="nome-produto5" placeholder="Nome do produto">
-            <input type="number" id="valor-produto5" placeholder="Valor">
-            <input type="number" id="quantidade-produto5" placeholder="Quantidade">
-            <button onclick="adicionarPedido(5)">Adicionar</button>
-            <p id="mesa5-total">Total: R$ 0,00</p>
-            <div id="mesa5-qrcode" style="display:none;"></div> <!-- QR Code -->
-            <button onclick="limparMesa(5)">Limpar</button>
+    <div class="container">
+        <h1>Mesas da Lanchonete Bacanga</h1>
+        <div class="mesas">
+            <!-- Repetir para as 5 mesas -->
+            <div class="mesa">
+                <h2>Mesa 1</h2>
+                <input type="text" id="nomeMesa1" placeholder="Nome do Produto">
+                <input type="number" id="valorMesa1" placeholder="Valor" step="0.01">
+                <input type="number" id="quantidadeMesa1" placeholder="Quantidade">
+                <button class="btnAdicionar" data-mesa="1">Adicionar</button>
+                <button class="btnLimpar" data-mesa="1">Limpar</button>
+                <ul id="pedidosMesa1"></ul>
+                <p id="totalMesa1">Total: R$0,00</p>
+                <div id="qrcodeMesa1"></div>
+            </div>
+            <!-- Repita para mesas 2 a 5 -->
+            <div class="mesa">
+                <h2>Mesa 2</h2>
+                <input type="text" id="nomeMesa2" placeholder="Nome do Produto">
+                <input type="number" id="valorMesa2" placeholder="Valor" step="0.01">
+                <input type="number" id="quantidadeMesa2" placeholder="Quantidade">
+                <button class="btnAdicionar" data-mesa="2">Adicionar</button>
+                <button class="btnLimpar" data-mesa="2">Limpar</button>
+                <ul id="pedidosMesa2"></ul>
+                <p id="totalMesa2">Total: R$0,00</p>
+                <div id="qrcodeMesa2"></div>
+            </div>
+            <div class="mesa">
+                <h2>Mesa 3</h2>
+                <input type="text" id="nomeMesa3" placeholder="Nome do Produto">
+                <input type="number" id="valorMesa3" placeholder="Valor" step="0.01">
+                <input type="number" id="quantidadeMesa3" placeholder="Quantidade">
+                <button class="btnAdicionar" data-mesa="3">Adicionar</button>
+                <button class="btnLimpar" data-mesa="3">Limpar</button>
+                <ul id="pedidosMesa3"></ul>
+                <p id="totalMesa3">Total: R$0,00</p>
+                <div id="qrcodeMesa3"></div>
+            </div>
+            <div class="mesa">
+                <h2>Mesa 4</h2>
+                <input type="text" id="nomeMesa4" placeholder="Nome do Produto">
+                <input type="number" id="valorMesa4" placeholder="Valor" step="0.01">
+                <input type="number" id="quantidadeMesa4" placeholder="Quantidade">
+                <button class="btnAdicionar" data-mesa="4">Adicionar</button>
+                <button class="btnLimpar" data-mesa="4">Limpar</button>
+                <ul id="pedidosMesa4"></ul>
+                <p id="totalMesa4">Total: R$0,00</p>
+                <div id="qrcodeMesa4"></div>
+            </div>
+            <div class="mesa">
+                <h2>Mesa 5</h2>
+                <input type="text" id="nomeMesa5" placeholder="Nome do Produto">
+                <input type="number" id="valorMesa5" placeholder="Valor" step="0.01">
+                <input type="number" id="quantidadeMesa5" placeholder="Quantidade">
+                <button class="btnAdicionar" data-mesa="5">Adicionar</button>
+                <button class="btnLimpar" data-mesa="5">Limpar</button>
+                <ul id="pedidosMesa5"></ul>
+                <p id="totalMesa5">Total: R$0,00</p>
+                <div id="qrcodeMesa5"></div>
+            </div>
         </div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
