@@ -1,84 +1,53 @@
-/* Estilo geral */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    padding: 20px;
+    background-color: #f4f4f9;
+}
+
+h1 {
+    text-align: center;
     color: #333;
 }
 
-/* Cabeçalho */
-h1 {
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 20px;
-}
-
-/* Contêiner principal das mesas */
 .mesas-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    padding: 10px;
+    justify-content: space-around;
 }
 
-/* Cada mesa terá um estilo similar */
 .mesa {
-    background-color: #fff;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 15px;
     margin: 10px;
-    width: calc(100% / 2 - 40px);
-    max-width: 300px;
+    width: 250px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+input, button {
+    margin: 5px 0;
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+}
+
+button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+.qrcode {
+    margin-top: 10px;
     text-align: center;
 }
 
-/* Cabeçalho de cada mesa */
-.mesa h2 {
-    margin-top: 0;
-    color: #2980b9;
-}
-
-/* Botões de ação */
-.mesa button {
-    padding: 10px 15px;
-    margin: 5px 0;
-    border: none;
-    background-color: #2980b9;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.mesa button:hover {
-    background-color: #3498db;
-}
-
-/* QR Code */
-.qrcode {
-    margin-top: 15px;
-}
-
-/* Total do pedido */
 .total {
-    font-size: 18px;
     font-weight: bold;
-    margin-top: 10px;
-    color: #27ae60;
-}
-
-/* Estilo para dispositivos móveis */
-@media (max-width: 600px) {
-    .mesa {
-        width: 100%;
-        max-width: none;
-    }
-    
-    .mesas-container {
-        flex-direction: column;
-        align-items: center;
-    }
+    color: #333;
 }
