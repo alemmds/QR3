@@ -1,75 +1,97 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <script src="qrcode.min.js"></script>
-    <script src="script.js" defer></script>
-    <title>Mesas da Lanchonete Bacanga</title>
-</head>
-<body>
-    <div class="container">
-        <h1>Mesas da Lanchonete Bacanga</h1>
-        <div class="mesas">
-            <!-- Repetir para as 5 mesas -->
-            <div class="mesa">
-                <h2>Mesa 1</h2>
-                <input type="text" id="nomeMesa1" placeholder="Nome do Produto">
-                <input type="number" id="valorMesa1" placeholder="Valor" step="0.01">
-                <input type="number" id="quantidadeMesa1" placeholder="Quantidade">
-                <button class="btnAdicionar" data-mesa="1">Adicionar</button>
-                <button class="btnLimpar" data-mesa="1">Limpar</button>
-                <ul id="pedidosMesa1"></ul>
-                <p id="totalMesa1">Total: R$0,00</p>
-                <div id="qrcodeMesa1"></div>
-            </div>
-            <!-- Repita para mesas 2 a 5 -->
-            <div class="mesa">
-                <h2>Mesa 2</h2>
-                <input type="text" id="nomeMesa2" placeholder="Nome do Produto">
-                <input type="number" id="valorMesa2" placeholder="Valor" step="0.01">
-                <input type="number" id="quantidadeMesa2" placeholder="Quantidade">
-                <button class="btnAdicionar" data-mesa="2">Adicionar</button>
-                <button class="btnLimpar" data-mesa="2">Limpar</button>
-                <ul id="pedidosMesa2"></ul>
-                <p id="totalMesa2">Total: R$0,00</p>
-                <div id="qrcodeMesa2"></div>
-            </div>
-            <div class="mesa">
-                <h2>Mesa 3</h2>
-                <input type="text" id="nomeMesa3" placeholder="Nome do Produto">
-                <input type="number" id="valorMesa3" placeholder="Valor" step="0.01">
-                <input type="number" id="quantidadeMesa3" placeholder="Quantidade">
-                <button class="btnAdicionar" data-mesa="3">Adicionar</button>
-                <button class="btnLimpar" data-mesa="3">Limpar</button>
-                <ul id="pedidosMesa3"></ul>
-                <p id="totalMesa3">Total: R$0,00</p>
-                <div id="qrcodeMesa3"></div>
-            </div>
-            <div class="mesa">
-                <h2>Mesa 4</h2>
-                <input type="text" id="nomeMesa4" placeholder="Nome do Produto">
-                <input type="number" id="valorMesa4" placeholder="Valor" step="0.01">
-                <input type="number" id="quantidadeMesa4" placeholder="Quantidade">
-                <button class="btnAdicionar" data-mesa="4">Adicionar</button>
-                <button class="btnLimpar" data-mesa="4">Limpar</button>
-                <ul id="pedidosMesa4"></ul>
-                <p id="totalMesa4">Total: R$0,00</p>
-                <div id="qrcodeMesa4"></div>
-            </div>
-            <div class="mesa">
-                <h2>Mesa 5</h2>
-                <input type="text" id="nomeMesa5" placeholder="Nome do Produto">
-                <input type="number" id="valorMesa5" placeholder="Valor" step="0.01">
-                <input type="number" id="quantidadeMesa5" placeholder="Quantidade">
-                <button class="btnAdicionar" data-mesa="5">Adicionar</button>
-                <button class="btnLimpar" data-mesa="5">Limpar</button>
-                <ul id="pedidosMesa5"></ul>
-                <p id="totalMesa5">Total: R$0,00</p>
-                <div id="qrcodeMesa5"></div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+window.onload = function() {
+    for (let i = 1; i <= 5; i++) {
+        loadMesa(i);
+    }
+};
+
+function loadMesa(mesa) {
+    let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`));
+    if (pedidos && pedidos.length > 0) {
+        pedidos.forEach(pedido => adicionarPedido(mesa, pedido.nome, pedido.valor, pedido.quantidade, false));
+        atualizarTotal(mesa);
+    }
+}
+
+function adicionarPedido(mesa, nome, valor, quantidade, save = true) {
+    if (!nome || !valor || !quantidade) {
+        alert('Por favor, preencha todos os campos!');
+        return;
+    }
+
+    let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
+
+    pedidos.push({ nome, valor: parseFloat(valor), quantidade: parseInt(quantidade) });
+
+    if (save) {
+        localStorage.setItem(`mesa${mesa}`, JSON.stringify(pedidos));
+    }
+
+    atualizarMesaHTML(mesa, pedidos);
+    atualizarTotal(mesa);
+}
+
+function atualizarMesaHTML(mesa, pedidos) {
+    let listaPedidos = document.getElementById(`pedidosMesa${mesa}`);
+    listaPedidos.innerHTML = ''; // Limpa a lista antes de adicionar os itens
+
+    pedidos.forEach(pedido => {
+        let item = document.createElement('li');
+        item.innerHTML = `${pedido.nome} - R$${pedido.valor.toFixed(2)} x ${pedido.quantidade}`;
+        listaPedidos.appendChild(item);
+    });
+}
+
+function atualizarTotal(mesa) {
+    let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
+    let total = pedidos.reduce((acc, pedido) => acc + (pedido.valor * pedido.quantidade), 0);
+    document.getElementById(`totalMesa${mesa}`).innerText = `Total: R$${total.toFixed(2)}`;
+
+    // Gera o QR Code apenas se o total for maior que 0
+    if (total > 0) {
+        gerarQRCode(mesa);
+    } else {
+        document.getElementById(`qrcodeMesa${mesa}`).innerHTML = '';
+    }
+}
+
+function gerarQRCode(mesa) {
+    let qrcodeDiv = document.getElementById(`qrcodeMesa${mesa}`);
+    qrcodeDiv.innerHTML = ''; // Limpa o QR code existente
+
+    let qrcode = new QRCode(qrcodeDiv, {
+        text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
+        width: 128,
+        height: 128
+    });
+}
+
+function limparMesa(mesa) {
+    localStorage.removeItem(`mesa${mesa}`);
+    document.getElementById(`pedidosMesa${mesa}`).innerHTML = '';
+    document.getElementById(`totalMesa${mesa}`).innerText = 'Total: R$0,00';
+    document.getElementById(`qrcodeMesa${mesa}`).innerHTML = '';
+}
+
+// Função para adicionar um pedido quando o usuário clica no botão
+document.querySelectorAll('.btnAdicionar').forEach(button => {
+    button.addEventListener('click', function() {
+        let mesa = this.dataset.mesa;
+        let nome = document.getElementById(`nomeMesa${mesa}`).value;
+        let valor = document.getElementById(`valorMesa${mesa}`).value;
+        let quantidade = document.getElementById(`quantidadeMesa${mesa}`).value;
+
+        // Limpa os campos após adicionar
+        adicionarPedido(mesa, nome, valor, quantidade);
+        document.getElementById(`nomeMesa${mesa}`).value = '';
+        document.getElementById(`valorMesa${mesa}`).value = '';
+        document.getElementById(`quantidadeMesa${mesa}`).value = '';
+    });
+});
+
+// Função para limpar a mesa quando o usuário clica no botão Limpar
+document.querySelectorAll('.btnLimpar').forEach(button => {
+    button.addEventListener('click', function() {
+        let mesa = this.dataset.mesa;
+        limparMesa(mesa);
+    });
+});
