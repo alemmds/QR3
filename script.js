@@ -1,51 +1,45 @@
-function adicionarPedido(mesa) {
-    const item = document.getElementById(`item-mesa${mesa}`).value;
-    const valor = parseFloat(document.getElementById(`valor-mesa${mesa}`).value);
-    const quantidade = parseInt(document.getElementById(`quantidade-mesa${mesa}`).value);
-    if (!item || isNaN(valor) || isNaN(quantidade)) {
-        alert("Por favor, preencha todos os campos corretamente.");
-        return;
-    }
+$(document).ready(function () {
+    $('.adicionar').on('click', function () {
+        const mesa = $(this).closest('.mesa');
+        const item = mesa.find('.item').val();
+        const valor = parseFloat(mesa.find('.valor').val());
+        const quantidade = parseInt(mesa.find('.quantidade').val());
 
-    let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}-pedidos`)) || [];
-    pedidos.push({ item, valor, quantidade });
-    localStorage.setItem(`mesa${mesa}-pedidos`, JSON.stringify(pedidos));
+        if (item && valor && quantidade) {
+            let total = valor * quantidade;
+            let resumo = mesa.find('.resumo');
 
-    atualizarTotal(mesa);
-}
+            resumo.append(`<p>${item} - R$ ${valor.toFixed(2)} x ${quantidade} = R$ ${(total).toFixed(2)}</p>`);
 
-function atualizarTotal(mesa) {
-    const pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}-pedidos`)) || [];
-    let total = pedidos.reduce((acc, pedido) => acc + (pedido.valor * pedido.quantidade), 0);
+            let valorTotal = 0;
+            resumo.find('p').each(function () {
+                const linha = $(this).text();
+                const partes = linha.split('= R$ ');
+                if (partes.length > 1) {
+                    valorTotal += parseFloat(partes[1]);
+                }
+            });
 
-    document.getElementById(`total-mesa${mesa}`).innerText = `Total: R$ ${total.toFixed(2)}`;
-    
-    if (total > 0) {
-        document.getElementById(`resumo-btn-mesa${mesa}`).style.display = 'block';
-        gerarQRCode(mesa);
-    } else {
-        document.getElementById(`resumo-btn-mesa${mesa}`).style.display = 'none';
-    }
-}
-
-function limparMesa(mesa) {
-    localStorage.removeItem(`mesa${mesa}-pedidos`);
-    document.getElementById(`total-mesa${mesa}`).innerText = 'Total: R$ 0,00';
-    document.getElementById(`qrcode-mesa${mesa}`).innerHTML = '';
-    document.getElementById(`resumo-btn-mesa${mesa}`).style.display = 'none';
-}
-
-function gerarQRCode(mesa) {
-    const qrCodeDiv = document.getElementById(`qrcode-mesa${mesa}`);
-    qrCodeDiv.innerHTML = ''; // Limpa o QR code existente
-
-    const qrcode = new QRCode(qrCodeDiv, {
-        text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
-        width: 128,
-        height: 128
+            mesa.find('.qr-code').empty();
+            if (valorTotal > 0) {
+                const qrCodeUrl = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa.data('mesa')}`;
+                new QRCode(mesa.find('.qr-code')[0], {
+                    text: qrCodeUrl,
+                    width: 128,
+                    height: 128,
+                });
+            }
+        } else {
+            alert("Por favor, preencha todos os campos.");
+        }
     });
-}
 
-function gerarResumo(mesa) {
-    window.location.href = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`;
-}
+    $('.limpar').on('click', function () {
+        const mesa = $(this).closest('.mesa');
+        mesa.find('.item').val('');
+        mesa.find('.valor').val('');
+        mesa.find('.quantidade').val('');
+        mesa.find('.resumo').empty();
+        mesa.find('.qr-code').empty();
+    });
+});
