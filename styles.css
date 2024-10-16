@@ -1,89 +1,73 @@
-/* Ajustes gerais */
-body, html {
-    margin: 0;
-    padding: 0;
+body {
     font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-}
-
-/* Estilo do cabeçalho */
-.header {
-    background-color: #4CAF50;
+    background-color: #f4f4f4;
+    margin: 0;
     padding: 20px;
+    color: #333;
     text-align: center;
 }
 
-.header h1 {
+h1 {
+    background-color: #2196f3;
     color: white;
-    margin: 0;
+    padding: 15px;
     font-size: 24px;
 }
 
-/* Layout horizontal para mesas */
 .mesa-container {
     display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .mesa {
-    background-color: #ffffff;
+    background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-right: 20px;
+    margin: 10px;
     padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 250px;
-    min-width: 250px;
 }
 
-.mesa h2 {
-    margin: 0;
-    font-size: 18px;
-    text-align: center;
-    color: #333;
+input {
+    display: block;
+    margin: 10px auto;
+    padding: 8px;
+    width: 80%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-.mesa-info {
+button {
+    background-color: #2196f3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
     margin-top: 10px;
 }
 
-.mesa-info span {
-    display: block;
-    font-size: 16px;
-    margin-bottom: 10px;
+button:hover {
+    background-color: #1976d2;
 }
 
-.mesa-info button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
+#mesa1-qrcode, #mesa2-qrcode, #mesa3-qrcode, #mesa4-qrcode, #mesa5-qrcode {
+    display: none;
 }
 
-.mesa-info button:hover {
-    background-color: #0056b3;
+p {
+    margin: 10px 0;
 }
 
-/* Mobile responsiveness */
-@media screen and (max-width: 600px) {
+@media (max-width: 768px) {
+    .mesa-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .mesa {
-        width: 200px;
-        min-width: 200px;
-    }
-
-    .mesa h2 {
-        font-size: 16px;
-    }
-
-    .mesa-info button {
-        font-size: 14px;
+        width: 90%;
     }
 }
