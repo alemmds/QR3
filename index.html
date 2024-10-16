@@ -1,17 +1,77 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lanchonete Bacanga - Pedidos</title>
+    <title>Mesas da Lanchonete Bacanga</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="qrcode.min.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <h1>Mesas da Lanchonete Bacanga</h1>
-    
-    <div class="mesas-container" id="mesas"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Interface para as 5 mesas -->
+    <div class="mesa" id="mesa1">
+        <h2>Mesa 1</h2>
+        <input type="text" placeholder="Item" id="item-mesa1">
+        <input type="number" placeholder="Valor" id="valor-mesa1">
+        <input type="number" placeholder="Quantidade" id="quantidade-mesa1">
+        <button onclick="adicionarPedido(1)">Adicionar</button>
+        <button onclick="limparMesa(1)">Limpar</button>
+        <div id="total-mesa1">Total: R$ 0,00</div>
+        <div id="qrcode-mesa1"></div>
+        <button id="resumo-btn-mesa1" style="display:none;" onclick="gerarResumo(1)">Resumo</button>
+    </div>
+
+    <div class="mesa" id="mesa2">
+        <h2>Mesa 2</h2>
+        <input type="text" placeholder="Item" id="item-mesa2">
+        <input type="number" placeholder="Valor" id="valor-mesa2">
+        <input type="number" placeholder="Quantidade" id="quantidade-mesa2">
+        <button onclick="adicionarPedido(2)">Adicionar</button>
+        <button onclick="limparMesa(2)">Limpar</button>
+        <div id="total-mesa2">Total: R$ 0,00</div>
+        <div id="qrcode-mesa2"></div>
+        <button id="resumo-btn-mesa2" style="display:none;" onclick="gerarResumo(2)">Resumo</button>
+    </div>
+
+    <!-- Adicione para as outras mesas (Mesa 3, 4, 5) -->
+    <div class="mesa" id="mesa3">
+        <h2>Mesa 3</h2>
+        <input type="text" placeholder="Item" id="item-mesa3">
+        <input type="number" placeholder="Valor" id="valor-mesa3">
+        <input type="number" placeholder="Quantidade" id="quantidade-mesa3">
+        <button onclick="adicionarPedido(3)">Adicionar</button>
+        <button onclick="limparMesa(3)">Limpar</button>
+        <div id="total-mesa3">Total: R$ 0,00</div>
+        <div id="qrcode-mesa3"></div>
+        <button id="resumo-btn-mesa3" style="display:none;" onclick="gerarResumo(3)">Resumo</button>
+    </div>
+
+    <div class="mesa" id="mesa4">
+        <h2>Mesa 4</h2>
+        <input type="text" placeholder="Item" id="item-mesa4">
+        <input type="number" placeholder="Valor" id="valor-mesa4">
+        <input type="number" placeholder="Quantidade" id="quantidade-mesa4">
+        <button onclick="adicionarPedido(4)">Adicionar</button>
+        <button onclick="limparMesa(4)">Limpar</button>
+        <div id="total-mesa4">Total: R$ 0,00</div>
+        <div id="qrcode-mesa4"></div>
+        <button id="resumo-btn-mesa4" style="display:none;" onclick="gerarResumo(4)">Resumo</button>
+    </div>
+
+    <div class="mesa" id="mesa5">
+        <h2>Mesa 5</h2>
+        <input type="text" placeholder="Item" id="item-mesa5">
+        <input type="number" placeholder="Valor" id="valor-mesa5">
+        <input type="number" placeholder="Quantidade" id="quantidade-mesa5">
+        <button onclick="adicionarPedido(5)">Adicionar</button>
+        <button onclick="limparMesa(5)">Limpar</button>
+        <div id="total-mesa5">Total: R$ 0,00</div>
+        <div id="qrcode-mesa5"></div>
+        <button id="resumo-btn-mesa5" style="display:none;" onclick="gerarResumo(5)">Resumo</button>
+    </div>
+
 </body>
 </html>
