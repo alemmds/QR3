@@ -1,101 +1,80 @@
-/* Estilo geral */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+    margin: 20px;
 }
 
-/* Cabeçalho */
 h1 {
+    font-size: 28px; /* Aumenta o tamanho do título principal */
     text-align: center;
-    color: #2c3e50;
-    margin-top: 20px;
+    color: #4CAF50;
+    margin-bottom: 30px;
 }
 
-/* Contêiner principal das mesas */
 .mesas-container {
     display: flex;
     flex-wrap: wrap;
+    gap: 20px;
     justify-content: center;
-    padding: 10px;
 }
 
-/* Cada mesa terá um estilo similar */
 .mesa {
-    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.mesa h2 {
+    font-size: 24px; /* Aumenta o tamanho do título da mesa */
+    margin-bottom: 10px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: calc(100% - 22px); /* Responsivo */
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 18px; /* Aumenta o tamanho dos inputs */
     border: 1px solid #ddd;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    margin: 10px;
-    width: calc(100% / 2 - 40px); /* Mesas lado a lado em telas maiores */
-    max-width: 300px;
 }
 
-/* Cabeçalho de cada mesa */
-.mesa h2 {
-    margin-top: 0;
-    color: #2980b9;
-}
-
-/* Inputs e botões dentro de cada mesa */
-.mesa input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Botões de ação */
-.mesa button {
-    padding: 10px 15px;
-    margin-right: 5px;
-    border: none;
-    background-color: #2980b9;
+button {
+    padding: 12px 18px;
+    background-color: #4CAF50; /* Verde */
     color: white;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 18px; /* Aumenta o tamanho do botão */
 }
 
-.mesa button:hover {
-    background-color: #3498db;
+button:hover {
+    background-color: #45a049; /* Verde escuro ao passar o mouse */
 }
 
 .qrcode {
-    margin-top: 15px;
+    margin-top: 20px; /* Margem superior */
+    text-align: center;
 }
 
-/* Link do resumo */
 .resumo-link {
     display: block;
-    margin-top: 10px;
-    color: #2980b9;
-    text-decoration: none;
+    margin-top: 20px;
+    font-size: 20px; /* Aumenta o tamanho do link */
+    color: #4CAF50; /* Verde */
+    text-decoration: none; /* Remove o sublinhado */
 }
 
 .resumo-link:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Sublinhado ao passar o mouse */
 }
 
-/* Total do pedido */
 .total {
-    font-size: 16px;
+    font-size: 22px; /* Aumenta o tamanho do total */
     font-weight: bold;
-    margin-top: 10px;
-}
-
-/* Estilo para dispositivos móveis */
-@media (max-width: 600px) {
-    .mesa {
-        width: 100%;
-        max-width: none;
-    }
-    
-    .mesas-container {
-        flex-direction: column;
-        align-items: center;
-    }
+    margin-top: 30px; /* Espaçamento superior */
 }
