@@ -46,15 +46,16 @@ function atualizarTotal(mesa) {
 
     // Gera o QR Code apenas se o total for maior que 0
     if (total > 0) {
-        gerarQRCode(mesa, total);
+        gerarQRCode(mesa);
     } else {
         document.getElementById(`qrcodeMesa${mesa}`).innerHTML = '';
     }
 }
 
-function gerarQRCode(mesa, total) {
+function gerarQRCode(mesa) {
     let qrcodeDiv = document.getElementById(`qrcodeMesa${mesa}`);
     qrcodeDiv.innerHTML = ''; // Limpa o QR code existente
+
     let qrcode = new QRCode(qrcodeDiv, {
         text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
         width: 128,
