@@ -1,63 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panificadora Bacanga</title>
+    <title>Panificadora Bacanga - Comanda</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
     <h1>Mesas da Panificadora Bacanga</h1>
     
-    <div class="mesas-container" id="mesas">
-        <!-- As mesas serão geradas dinamicamente -->
+    <div class="mesas-container">
+        <!-- Mesa 1 -->
+        <div class="mesa" id="mesa-1">
+            <h2>Mesa 1</h2>
+            <input type="text" placeholder="Produto" id="produto-1">
+            <input type="number" placeholder="Valor" id="valor-1">
+            <input type="number" placeholder="Quantidade" id="quantidade-1">
+            <button onclick="adicionarPedido(1)">Adicionar</button>
+            <p class="total" id="total-1">Total: R$ 0,00</p>
+            <div class="qrcode" id="qrcode-1"></div>
+            <button onclick="limparMesa(1)">LIMPAR</button>
+            <button onclick="atualizarMesa(1)">ATUALIZAR</button>
+        </div>
+        
+        <!-- Mesa 2 -->
+        <div class="mesa" id="mesa-2">
+            <h2>Mesa 2</h2>
+            <input type="text" placeholder="Produto" id="produto-2">
+            <input type="number" placeholder="Valor" id="valor-2">
+            <input type="number" placeholder="Quantidade" id="quantidade-2">
+            <button onclick="adicionarPedido(2)">Adicionar</button>
+            <p class="total" id="total-2">Total: R$ 0,00</p>
+            <div class="qrcode" id="qrcode-2"></div>
+            <button onclick="limparMesa(2)">LIMPAR</button>
+            <button onclick="atualizarMesa(2)">ATUALIZAR</button>
+        </div>
+
+        <!-- Mesas 3 a 5 são similares -->
+        <!-- Adicione para as demais mesas com id mesa-3, mesa-4, mesa-5 -->
     </div>
 
-    <script>
-        // Definindo as mesas
-        const mesas = [1, 2, 3, 4, 5];
-        const mesasContainer = document.getElementById("mesas");
-
-        // Função para limpar a mesa
-        function limparMesa(mesa) {
-            const qrContainer = document.getElementById(`qrcode-${mesa}`);
-            qrContainer.innerHTML = ""; // Limpa o QR Code
-            document.getElementById(`total-${mesa}`).textContent = "Total: R$ 0,00"; // Reseta o total
-        }
-
-        // Função para gerar o QR Code
-        function gerarQRCode(mesa) {
-            const totalElement = document.getElementById(`total-${mesa}`);
-            const totalText = totalElement.textContent;
-            
-            // Verifica se o total é maior que 0
-            if (parseFloat(totalText.replace("Total: R$ ", "").replace(",", ".")) > 0) {
-                const qrContainer = document.getElementById(`qrcode-${mesa}`);
-                qrContainer.innerHTML = ""; // Limpa o QR code anterior
-                new QRCode(qrContainer, {
-                    text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
-                    width: 128,
-                    height: 128
-                });
-            } else {
-                alert("O valor total deve ser maior que 0 para gerar o QR Code.");
-            }
-        }
-
-        // Criar mesas dinamicamente
-        mesas.forEach(mesa => {
-            const divMesa = document.createElement('div');
-            divMesa.classList.add('mesa');
-            divMesa.innerHTML = `
-                <h2>Mesa ${mesa}</h2>
-                <div id="qrcode-${mesa}" class="qrcode"></div>
-                <p class="total" id="total-${mesa}">Total: R$ 0,00</p>
-                <button onclick="gerarQRCode(${mesa})">Gerar QR Code</button>
-                <button onclick="limparMesa(${mesa})">Limpar</button>
-            `;
-            mesasContainer.appendChild(divMesa);
-        });
-    </script>
+    <script src="qrcode.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
