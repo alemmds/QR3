@@ -1,3 +1,4 @@
+// Verifica se já existem dados salvos no Local Storage ao carregar a página
 window.onload = function() {
     for (let i = 1; i <= 5; i++) {
         loadMesa(i);
@@ -13,14 +14,14 @@ function loadMesa(mesa) {
 }
 
 function adicionarPedido(mesa, nome, valor, quantidade, save = true) {
-    if (!nome || !valor || !quantidade) {
-        alert('Por favor, preencha todos os campos!');
-        return;
-    }
+    if (!nome || !valor || !quantidade) return;
+
+    valor = parseFloat(valor);
+    quantidade = parseInt(quantidade);
 
     let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
 
-    pedidos.push({ nome, valor: parseFloat(valor), quantidade: parseInt(quantidade) });
+    pedidos.push({ nome, valor, quantidade });
 
     if (save) {
         localStorage.setItem(`mesa${mesa}`, JSON.stringify(pedidos));
@@ -48,16 +49,15 @@ function atualizarTotal(mesa) {
 
     // Gera o QR Code apenas se o total for maior que 0
     if (total > 0) {
-        gerarQRCode(mesa);
+        gerarQRCode(mesa, total);
     } else {
         document.getElementById(`qrcodeMesa${mesa}`).innerHTML = '';
     }
 }
 
-function gerarQRCode(mesa) {
+function gerarQRCode(mesa, total) {
     let qrcodeDiv = document.getElementById(`qrcodeMesa${mesa}`);
     qrcodeDiv.innerHTML = ''; // Limpa o QR code existente
-
     let qrcode = new QRCode(qrcodeDiv, {
         text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
         width: 128,
@@ -79,12 +79,7 @@ document.querySelectorAll('.btnAdicionar').forEach(button => {
         let nome = document.getElementById(`nomeMesa${mesa}`).value;
         let valor = document.getElementById(`valorMesa${mesa}`).value;
         let quantidade = document.getElementById(`quantidadeMesa${mesa}`).value;
-
-        // Limpa os campos após adicionar
         adicionarPedido(mesa, nome, valor, quantidade);
-        document.getElementById(`nomeMesa${mesa}`).value = '';
-        document.getElementById(`valorMesa${mesa}`).value = '';
-        document.getElementById(`quantidadeMesa${mesa}`).value = '';
     });
 });
 
