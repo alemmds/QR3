@@ -10,44 +10,76 @@
     <h1>Resumo dos Pedidos - Mesa X</h1>
     
     <div id="resumo-pedidos">
-        <!-- Exemplo de pedido listado aqui -->
-        <div class="pedido" id="pedido-1">
-            <p>Produto: Coxinha</p>
-            <p>Valor: R$ 5,00</p>
-            <p>Quantidade: 2</p>
-        </div>
-        <div class="pedido" id="pedido-2">
-            <p>Produto: Refrigerante</p>
-            <p>Valor: R$ 3,50</p>
-            <p>Quantidade: 1</p>
-        </div>
+        <!-- Os pedidos serão exibidos aqui -->
     </div>
 
-    <button onclick="editarResumo(1)">EDITAR Pedido 1</button>
-    <button onclick="editarResumo(2)">EDITAR Pedido 2</button>
     <button onclick="voltar()">VOLTAR</button>
 
     <script>
+        // Função para carregar os pedidos armazenados localmente
+        function carregarPedidos() {
+            const pedidos = JSON.parse(localStorage.getItem('pedidosMesaX')) || [];
+
+            const resumoElement = document.getElementById('resumo-pedidos');
+            resumoElement.innerHTML = '';  // Limpa a área para evitar duplicação
+
+            pedidos.forEach((pedido, index) => {
+                const pedidoElement = document.createElement('div');
+                pedidoElement.classList.add('pedido');
+                pedidoElement.setAttribute('id', `pedido-${index}`);
+
+                pedidoElement.innerHTML = `
+                    <p>Produto: ${pedido.produto}</p>
+                    <p>Valor: R$ ${pedido.valor.toFixed(2)}</p>
+                    <p>Quantidade: ${pedido.quantidade}</p>
+                    <button class="excluir-btn" onclick="excluirPedido(${index})">-</button>
+                    <button onclick="editarResumo(${index})">EDITAR</button>
+                `;
+
+                resumoElement.appendChild(pedidoElement);
+            });
+        }
+
+        // Função para editar pedidos
         function editarResumo(pedidoId) {
-            // Lógica para permitir edição de itens
-            const pedido = document.getElementById(`pedido-${pedidoId}`);
-            let produto = prompt("Digite o novo nome do produto:", pedido.querySelector('p:nth-child(1)').innerText.replace("Produto: ", ""));
-            let valor = prompt("Digite o novo valor:", pedido.querySelector('p:nth-child(2)').innerText.replace("Valor: R$ ", ""));
-            let quantidade = prompt("Digite a nova quantidade:", pedido.querySelector('p:nth-child(3)').innerText.replace("Quantidade: ", ""));
+            const pedidos = JSON.parse(localStorage.getItem('pedidosMesaX')) || [];
+            const pedido = pedidos[pedidoId];
+
+            let produto = prompt("Digite o novo nome do produto:", pedido.produto);
+            let valor = prompt("Digite o novo valor:", pedido.valor);
+            let quantidade = prompt("Digite a nova quantidade:", pedido.quantidade);
 
             if (produto && valor && quantidade) {
-                // Atualiza os valores no resumo
-                pedido.querySelector('p:nth-child(1)').innerText = `Produto: ${produto}`;
-                pedido.querySelector('p:nth-child(2)').innerText = `Valor: R$ ${parseFloat(valor).toFixed(2)}`;
-                pedido.querySelector('p:nth-child(3)').innerText = `Quantidade: ${quantidade}`;
+                // Atualiza os dados do pedido
+                pedidos[pedidoId] = { produto, valor: parseFloat(valor), quantidade: parseInt(quantidade) };
+
+                // Salva os dados atualizados no localStorage
+                localStorage.setItem('pedidosMesaX', JSON.stringify(pedidos));
+
+                // Recarrega os pedidos na página
+                carregarPedidos();
             } else {
                 alert("Edição cancelada.");
             }
         }
 
+        // Função para excluir pedidos
+        function excluirPedido(pedidoId) {
+            let pedidos = JSON.parse(localStorage.getItem('pedidosMesaX')) || [];
+
+            pedidos.splice(pedidoId, 1);  // Remove o pedido selecionado
+            localStorage.setItem('pedidosMesaX', JSON.stringify(pedidos));  // Atualiza o armazenamento
+
+            carregarPedidos();  // Recarrega os pedidos atualizados na página
+        }
+
+        // Função para voltar à página das mesas
         function voltar() {
             window.location.href = "index.html"; // Redireciona para a página principal
         }
+
+        // Carrega os pedidos ao abrir a página
+        window.onload = carregarPedidos;
     </script>
 </body>
 </html>
