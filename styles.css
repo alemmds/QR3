@@ -1,7 +1,8 @@
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
+    padding: 10px;
     background-color: #f4f4f9;
+    max-width: 100%;
 }
 
 h1 {
@@ -11,15 +12,16 @@ h1 {
 
 .mesas-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
 }
 
 .mesa {
     border: 1px solid #ddd;
     padding: 15px;
     margin: 10px;
-    width: 250px;
+    width: 100%;
+    max-width: 350px;
     background-color: white;
     border-radius: 8px;
 }
@@ -27,7 +29,7 @@ h1 {
 input, button {
     margin: 5px 0;
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     font-size: 1rem;
 }
 
@@ -50,4 +52,14 @@ button:hover {
 .total {
     font-weight: bold;
     color: #333;
+}
+
+#resumo-pedidos {
+    padding: 10px;
+}
+
+.pedido {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
