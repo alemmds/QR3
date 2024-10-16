@@ -1,3 +1,4 @@
+// Definindo as mesas
 let mesas = {
     1: { total: 0, pedidos: [] },
     2: { total: 0, pedidos: [] },
@@ -6,6 +7,27 @@ let mesas = {
     5: { total: 0, pedidos: [] }
 };
 
+// Função para gerar HTML das mesas
+function gerarMesas() {
+    const containerMesas = document.getElementById('mesas');
+    for (let i = 1; i <= 5; i++) {
+        containerMesas.innerHTML += `
+            <div class="mesa" id="mesa-${i}">
+                <h2>Mesa ${i}</h2>
+                <input type="text" placeholder="Produto" id="produto-${i}">
+                <input type="number" placeholder="Valor" id="valor-${i}">
+                <input type="number" placeholder="Quantidade" id="quantidade-${i}">
+                <button onclick="adicionarPedido(${i})">Adicionar</button>
+                <p class="total" id="total-${i}">Total: R$ 0,00</p>
+                <div class="qrcode" id="qrcode-${i}"></div>
+                <button onclick="limparMesa(${i})">LIMPAR</button>
+                <button onclick="atualizarMesa(${i})">ATUALIZAR</button>
+            </div>
+        `;
+    }
+}
+
+// Função para adicionar pedidos
 function adicionarPedido(mesa) {
     const produto = document.getElementById(`produto-${mesa}`).value;
     const valor = parseFloat(document.getElementById(`valor-${mesa}`).value);
@@ -20,12 +42,14 @@ function adicionarPedido(mesa) {
     }
 }
 
+// Função para calcular o total da mesa
 function calcularTotal(mesa) {
     const totalMesa = mesas[mesa].pedidos.reduce((acc, pedido) => acc + (pedido.valor * pedido.quantidade), 0);
     mesas[mesa].total = totalMesa;
     document.getElementById(`total-${mesa}`).textContent = `Total: R$ ${totalMesa.toFixed(2)}`;
 }
 
+// Função para gerar QR code
 function gerarQRCode(mesa) {
     const totalMesa = mesas[mesa].total;
     const qrcodeDiv = document.getElementById(`qrcode-${mesa}`);
@@ -41,6 +65,7 @@ function gerarQRCode(mesa) {
     }
 }
 
+// Função para limpar mesa
 function limparMesa(mesa) {
     mesas[mesa].pedidos = [];
     mesas[mesa].total = 0;
@@ -51,7 +76,11 @@ function limparMesa(mesa) {
     document.getElementById(`qrcode-${mesa}`).innerHTML = '';
 }
 
+// Função para atualizar mesa
 function atualizarMesa(mesa) {
     const url = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`;
-    window.location.href = url; // Redireciona para a página de resumo da mesa
+    window.location.href = url; // Redireciona para o resumo da mesa
 }
+
+// Inicializa as mesas no carregamento da página
+window.onload = gerarMesas;
