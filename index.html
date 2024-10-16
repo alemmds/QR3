@@ -1,100 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panificadora Bacanga - Pedidos</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="qrcode/qrcode.min.js"></script>
+    <title>Panificadora Bacanga</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Panificadora Bacanga - Pedidos</h1>
+    <h1>Mesas da Panificadora Bacanga</h1>
     
-    <div class="mesas-container">
-        <!-- Estrutura para 5 mesas -->
-        <div class="mesa" id="mesa1">
-            <h2>Mesa 1</h2>
-            <div>
-                <input type="text" id="item1" placeholder="Item">
-                <input type="number" id="preco1" placeholder="Preço">
-                <input type="number" id="quantidade1" placeholder="Quantidade">
-                <button onclick="adicionarItem(1)">Adicionar</button>
-                <button onclick="alterarPedido(1)">Alterar</button>
-                <button onclick="limparMesa(1)">Limpar</button>
-            </div>
-            <div class="qrcode" id="qrcode1"></div>
-            <a id="resumo1" class="resumo-link" target="_blank"></a>
-            <div class="total" id="total1">Total: R$ 0,00</div>
-        </div>
-        
-        <!-- Repetir estrutura para as Mesas 2 a 5 -->
-        <div class="mesa" id="mesa2">
-            <!-- Estrutura similar à Mesa 1 -->
-            <h2>Mesa 2</h2>
-            <div>
-                <input type="text" id="item2" placeholder="Item">
-                <input type="number" id="preco2" placeholder="Preço">
-                <input type="number" id="quantidade2" placeholder="Quantidade">
-                <button onclick="adicionarItem(2)">Adicionar</button>
-                <button onclick="alterarPedido(2)">Alterar</button>
-                <button onclick="limparMesa(2)">Limpar</button>
-            </div>
-            <div class="qrcode" id="qrcode2"></div>
-            <a id="resumo2" class="resumo-link" target="_blank"></a>
-            <div class="total" id="total2">Total: R$ 0,00</div>
-        </div>
-
-        <!-- Repita para Mesas 3, 4 e 5 -->
-        <!-- Mesa 3 -->
-        <div class="mesa" id="mesa3">
-            <h2>Mesa 3</h2>
-            <div>
-                <input type="text" id="item3" placeholder="Item">
-                <input type="number" id="preco3" placeholder="Preço">
-                <input type="number" id="quantidade3" placeholder="Quantidade">
-                <button onclick="adicionarItem(3)">Adicionar</button>
-                <button onclick="alterarPedido(3)">Alterar</button>
-                <button onclick="limparMesa(3)">Limpar</button>
-            </div>
-            <div class="qrcode" id="qrcode3"></div>
-            <a id="resumo3" class="resumo-link" target="_blank"></a>
-            <div class="total" id="total3">Total: R$ 0,00</div>
-        </div>
-
-        <!-- Repita para Mesas 4 e 5 -->
-        <!-- Mesa 4 -->
-        <div class="mesa" id="mesa4">
-            <h2>Mesa 4</h2>
-            <div>
-                <input type="text" id="item4" placeholder="Item">
-                <input type="number" id="preco4" placeholder="Preço">
-                <input type="number" id="quantidade4" placeholder="Quantidade">
-                <button onclick="adicionarItem(4)">Adicionar</button>
-                <button onclick="alterarPedido(4)">Alterar</button>
-                <button onclick="limparMesa(4)">Limpar</button>
-            </div>
-            <div class="qrcode" id="qrcode4"></div>
-            <a id="resumo4" class="resumo-link" target="_blank"></a>
-            <div class="total" id="total4">Total: R$ 0,00</div>
-        </div>
-
-        <!-- Mesa 5 -->
-        <div class="mesa" id="mesa5">
-            <h2>Mesa 5</h2>
-            <div>
-                <input type="text" id="item5" placeholder="Item">
-                <input type="number" id="preco5" placeholder="Preço">
-                <input type="number" id="quantidade5" placeholder="Quantidade">
-                <button onclick="adicionarItem(5)">Adicionar</button>
-                <button onclick="alterarPedido(5)">Alterar</button>
-                <button onclick="limparMesa(5)">Limpar</button>
-            </div>
-            <div class="qrcode" id="qrcode5"></div>
-            <a id="resumo5" class="resumo-link" target="_blank"></a>
-            <div class="total" id="total5">Total: R$ 0,00</div>
-        </div>
+    <div class="mesas-container" id="mesas">
+        <!-- As mesas serão geradas dinamicamente -->
     </div>
 
-    <script src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
