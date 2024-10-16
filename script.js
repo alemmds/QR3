@@ -1,79 +1,89 @@
-function adicionarPedido(mesa) {
-    let nome = document.getElementById(`nome-produto${mesa}`).value;
-    let valor = parseFloat(document.getElementById(`valor-produto${mesa}`).value);
-    let quantidade = parseInt(document.getElementById(`quantidade-produto${mesa}`).value);
+// Verifica se já existem dados salvos no Local Storage ao carregar a página
+window.onload = function() {
+    for (let i = 1; i <= 5; i++) {
+        loadMesa(i);
+    }
+};
 
-    if (!isNaN(valor) && !isNaN(quantidade) && nome !== "") {
-        let totalAtual = parseFloat(document.getElementById(`mesa${mesa}-total`).innerText.replace("Total: R$ ", "").replace(",", "."));
-        let novoTotal = totalAtual + (valor * quantidade);
-
-        // Atualizando o total da mesa
-        document.getElementById(`mesa${mesa}-total`).innerText = `Total: R$ ${novoTotal.toFixed(2).replace(".", ",")}`;
-
-        // Salvando os pedidos no Local Storage
-        let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}-pedidos`)) || [];
-        pedidos.push({ nome, valor, quantidade });
-        localStorage.setItem(`mesa${mesa}-pedidos`, JSON.stringify(pedidos));
-
-        // Gerar QR Code se o total for maior que 0
-        if (novoTotal > 0) {
-            document.getElementById(`mesa${mesa}-qrcode`).style.display = "block";
-            gerarQRCode(mesa);
-        }
-
-        atualizarResumoMesa(mesa);
+function loadMesa(mesa) {
+    let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`));
+    if (pedidos && pedidos.length > 0) {
+        pedidos.forEach(pedido => adicionarPedido(mesa, pedido.nome, pedido.valor, pedido.quantidade, false));
+        atualizarTotal(mesa);
     }
 }
 
-function limparMesa(mesa) {
-    document.getElementById(`nome-produto${mesa}`).value = "";
-    document.getElementById(`valor-produto${mesa}`).value = "";
-    document.getElementById(`quantidade-produto${mesa}`).value = "";
-    
-    document.getElementById(`mesa${mesa}-total`).innerText = "Total: R$ 0,00";
-    document.getElementById(`mesa${mesa}-qrcode`).style.display = "none";
+function adicionarPedido(mesa, nome, valor, quantidade, save = true) {
+    if (!nome || !valor || !quantidade) return;
 
-    // Limpar Local Storage
-    localStorage.removeItem(`mesa${mesa}-pedidos`);
+    let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
 
-    atualizarResumoMesa(mesa);
+    pedidos.push({ nome, valor: parseFloat(valor), quantidade: parseInt(quantidade) });
+
+    if (save) {
+        localStorage.setItem(`mesa${mesa}`, JSON.stringify(pedidos));
+    }
+
+    atualizarMesaHTML(mesa, pedidos);
+    atualizarTotal(mesa);
 }
 
-function gerarQRCode(mesa) {
-    let qrDiv = document.getElementById(`mesa${mesa}-qrcode`);
-    qrDiv.innerHTML = ""; // Limpa o QR Code anterior, se houver
-    
-    let qrcode = new QRCode(qrDiv, {
+function atualizarMesaHTML(mesa, pedidos) {
+    let listaPedidos = document.getElementById(`pedidosMesa${mesa}`);
+    listaPedidos.innerHTML = ''; // Limpa a lista antes de adicionar os itens
+
+    pedidos.forEach(pedido => {
+        let item = document.createElement('li');
+        item.innerHTML = `${pedido.nome} - R$${pedido.valor.toFixed(2)} x ${pedido.quantidade}`;
+        listaPedidos.appendChild(item);
+    });
+}
+
+function atualizarTotal(mesa) {
+    let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
+    let total = pedidos.reduce((acc, pedido) => acc + (pedido.valor * pedido.quantidade), 0);
+    document.getElementById(`totalMesa${mesa}`).innerText = `Total: R$${total.toFixed(2)}`;
+
+    // Gera o QR Code apenas se o total for maior que 0
+    if (total > 0) {
+        gerarQRCode(mesa, total);
+    } else {
+        document.getElementById(`qrcodeMesa${mesa}`).innerHTML = '';
+    }
+}
+
+function gerarQRCode(mesa, total) {
+    let qrcodeDiv = document.getElementById(`qrcodeMesa${mesa}`);
+    qrcodeDiv.innerHTML = ''; // Limpa o QR code existente
+    let qrcode = new QRCode(qrcodeDiv, {
         text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
         width: 128,
         height: 128
     });
 }
 
-function atualizarResumoMesa(mesa) {
-    let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}-pedidos`)) || [];
-    let resumoDiv = document.getElementById(`mesa${mesa}-resumo`);
-    resumoDiv.innerHTML = ""; // Limpa o resumo anterior
+function limparMesa(mesa) {
+    localStorage.removeItem(`mesa${mesa}`);
+    document.getElementById(`pedidosMesa${mesa}`).innerHTML = '';
+    document.getElementById(`totalMesa${mesa}`).innerText = 'Total: R$0,00';
+    document.getElementById(`qrcodeMesa${mesa}`).innerHTML = '';
+}
 
-    pedidos.forEach(pedido => {
-        let item = document.createElement("div");
-        item.innerText = `${pedido.nome} - R$${pedido.valor.toFixed(2)} x ${pedido.quantidade}`;
-        resumoDiv.appendChild(item);
+// Função para adicionar um pedido quando o usuário clica no botão
+document.querySelectorAll('.btnAdicionar').forEach(button => {
+    button.addEventListener('click', function() {
+        let mesa = this.dataset.mesa;
+        let nome = document.getElementById(`nomeMesa${mesa}`).value;
+        let valor = document.getElementById(`valorMesa${mesa}`).value;
+        let quantidade = document.getElementById(`quantidadeMesa${mesa}`).value;
+        adicionarPedido(mesa, nome, valor, quantidade);
     });
-}
+});
 
-// Carrega os pedidos do Local Storage ao iniciar a página
-function carregarPedidosIniciais() {
-    for (let mesa = 1; mesa <= 5; mesa++) {
-        atualizarResumoMesa(mesa);
-        let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}-pedidos`)) || [];
-        if (pedidos.length > 0) {
-            let total = pedidos.reduce((sum, pedido) => sum + (pedido.valor * pedido.quantidade), 0);
-            document.getElementById(`mesa${mesa}-total`).innerText = `Total: R$ ${total.toFixed(2).replace(".", ",")}`;
-            document.getElementById(`mesa${mesa}-qrcode`).style.display = "block";
-            gerarQRCode(mesa);
-        }
-    }
-}
-
-window.onload = carregarPedidosIniciais;
+// Função para limpar a mesa quando o usuário clica no botão Limpar
+document.querySelectorAll('.btnLimpar').forEach(button => {
+    button.addEventListener('click', function() {
+        let mesa = this.dataset.mesa;
+        limparMesa(mesa);
+    });
+});
