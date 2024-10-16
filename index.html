@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panificadora Bacanga - Pedidos</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="qrcode/qrcode.min.js"></script>
 </head>
 <body>
     <h1>Panificadora Bacanga - Pedidos</h1>
     
     <div class="mesas-container">
-        <!-- Repetindo a estrutura para 5 mesas -->
+        <!-- Estrutura para 5 mesas -->
         <div class="mesa" id="mesa1">
             <h2>Mesa 1</h2>
             <div>
@@ -26,10 +26,10 @@
             <a id="resumo1" class="resumo-link" target="_blank"></a>
             <div class="total" id="total1">Total: R$ 0,00</div>
         </div>
-
-        <!-- Repita a mesma estrutura para Mesa 2 a Mesa 5 -->
-        <!-- Mesa 2 -->
+        
+        <!-- Repetir estrutura para as Mesas 2 a 5 -->
         <div class="mesa" id="mesa2">
+            <!-- Estrutura similar à Mesa 1 -->
             <h2>Mesa 2</h2>
             <div>
                 <input type="text" id="item2" placeholder="Item">
@@ -44,7 +44,7 @@
             <div class="total" id="total2">Total: R$ 0,00</div>
         </div>
 
-        <!-- Repita para as mesas 3, 4 e 5 -->
+        <!-- Repita para Mesas 3, 4 e 5 -->
         <!-- Mesa 3 -->
         <div class="mesa" id="mesa3">
             <h2>Mesa 3</h2>
@@ -61,6 +61,7 @@
             <div class="total" id="total3">Total: R$ 0,00</div>
         </div>
 
+        <!-- Repita para Mesas 4 e 5 -->
         <!-- Mesa 4 -->
         <div class="mesa" id="mesa4">
             <h2>Mesa 4</h2>
@@ -94,6 +95,6 @@
         </div>
     </div>
 
-    <script src="scripts.js"></script>
+    <script src="js/scripts.js"></script>
 </body>
 </html>
