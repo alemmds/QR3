@@ -1,61 +1,29 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo dos Pedidos - Mesa X</title>
     <link rel="stylesheet" href="styles.css">
+    <title>Resumo dos Pedidos</title>
 </head>
 <body>
-    <h1 id="mesa-title">Resumo dos Pedidos - Mesa X</h1>
-
-    <div id="resumo-pedidos"></div>
-
-    <button onclick="voltar()">VOLTAR</button>
+    <h1>Resumo dos Pedidos</h1>
+    <div id="resumo"></div>
+    <button id="voltar">Voltar</button>
 
     <script>
-        // Função para carregar os pedidos da mesa específica
-        function carregarPedidos() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const mesaId = urlParams.get('mesa');
-            const pedidos = JSON.parse(localStorage.getItem('pedidosMesa' + mesaId)) || [];
+        const params = new URLSearchParams(window.location.search);
+        const mesa = params.get('mesa');
+        
+        // Carrega os dados da mesa correspondente
+        document.getElementById('resumo').innerHTML = `
+            <h2>Mesa ${mesa}</h2>
+            <p>Aqui você verá os pedidos feitos.</p>
+        `;
 
-            document.getElementById('mesa-title').innerText = `Resumo dos Pedidos - Mesa ${mesaId}`;
-            const resumoElement = document.getElementById('resumo-pedidos');
-
-            pedidos.forEach((pedido, index) => {
-                const pedidoElement = document.createElement('div');
-                pedidoElement.classList.add('pedido');
-                pedidoElement.setAttribute('id', `pedido-${index}`);
-
-                pedidoElement.innerHTML = `
-                    <p>Produto: ${pedido.produto}</p>
-                    <p>Valor: R$ ${pedido.valor.toFixed(2)}</p>
-                    <p>Quantidade: ${pedido.quantidade}</p>
-                    <button class="excluir-btn" onclick="excluirPedido(${index}, ${mesaId})">-</button>
-                `;
-
-                resumoElement.appendChild(pedidoElement);
-            });
+        document.getElementById('voltar').onclick = function() {
+            window.history.back();
         }
-
-        // Função para excluir pedidos
-        function excluirPedido(pedidoId, mesaId) {
-            let pedidos = JSON.parse(localStorage.getItem('pedidosMesa' + mesaId)) || [];
-
-            pedidos.splice(pedidoId, 1);
-            localStorage.setItem('pedidosMesa' + mesaId, JSON.stringify(pedidos));
-
-            // Recarrega a página
-            window.location.reload();
-        }
-
-        // Função para voltar à página das mesas
-        function voltar() {
-            window.location.href = "index.html";
-        }
-
-        window.onload = carregarPedidos;
     </script>
 </body>
 </html>
