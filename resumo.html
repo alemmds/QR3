@@ -3,66 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Resumo de Pedidos</title>
+    <title>Resumo da Mesa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+        }
+        #pedido-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        #pedido-list li {
+            background-color: #eee;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .total {
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+        }
+        .botao {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .botao:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Resumo de Pedidos - Mesa <span id="mesa-number"></span></h1>
-
-        <!-- Resumo dos pedidos -->
-        <div id="resumo-pedidos">
-            <ul id="pedidos-list"></ul>
-        </div>
-
-        <!-- Total dos pedidos -->
-        <div class="total">
-            <strong>Total: R$ <span id="total-valor">0.00</span></strong>
-        </div>
-
-        <!-- Botão Voltar -->
-        <div class="buttons">
-            <button onclick="voltar()" class="botao">Voltar</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+    <h1>Resumo dos Pedidos</h1>
+    <ul id="pedido-list">
+        <!-- Os pedidos serão carregados aqui -->
+    </ul>
+    <p id="total" class="total">Total: R$0,00</p>
+    <a href="index.html" class="botao">Voltar</a>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const mesaId = urlParams.get('mesa');
-        document.getElementById('mesa-number').textContent = mesaId;
-
-        // Função para exibir os pedidos da mesa
-        function exibirPedidos() {
-            const pedidos = JSON.parse(localStorage.getItem(`pedidosMesa${mesaId}`)) || [];
-            const pedidosList = document.getElementById('pedidos-list');
-            const totalValor = document.getElementById('total-valor');
-            let total = 0;
-
-            pedidosList.innerHTML = '';
-
-            if (pedidos.length === 0) {
-                pedidosList.innerHTML = '<li>Nenhum pedido registrado</li>';
-            } else {
-                pedidos.forEach((pedido, index) => {
-                    const li = document.createElement('li');
-                    li.textContent = `${pedido.nome} - R$ ${pedido.valor.toFixed(2)} (Qtd: ${pedido.quantidade})`;
-                    pedidosList.appendChild(li);
-                    total += pedido.valor * pedido.quantidade;
-                });
-
-                totalValor.textContent = total.toFixed(2);
-            }
-        }
-
-        function voltar() {
-            window.location.href = 'index.html'; // Voltar para a página principal
-        }
-
-        // Carregar pedidos ao abrir a página
+        // Função para carregar o resumo da mesa
         window.onload = function() {
-            exibirPedidos();
+            const urlParams = new URLSearchParams(window.location.search);
+            const mesa = urlParams.get('mesa');
+            if (mesa) {
+                carregarResumo(mesa);
+            } else {
+                document.getElementById('pedido-list').innerHTML = '<li>Nenhum pedido registrado</li>';
+            }
         };
+
+        // Função que carrega os pedidos do Local Storage e exibe na página
+        function carregarResumo(mesa) {
+            let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
+            if (pedidos.length === 0) {
+                document.getElementById('pedido-list').innerHTML = '<li>Nenhum pedido registrado</li>';
+                document.getElementById('total').innerText = 'Total: R$0,00';
+                return;
+            }
+
+            let lista = document.getElementById('pedido-list');
+            let total = 0;
+            pedidos.forEach(pedido => {
+                let item = document.createElement('li');
+                item.innerText = `${pedido.nome} - R$${pedido.valor.toFixed(2)} x ${pedido.quantidade}`;
+                lista.appendChild(item);
+                total += pedido.valor * pedido.quantidade;
+            });
+
+            document.getElementById('total').innerText = `Total: R$${total.toFixed(2)}`;
+        }
     </script>
 </body>
 </html>
