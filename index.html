@@ -5,64 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Mesas da Lanchonete Bacanga</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="qrcode.min.js"></script>
-    <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Mesas da Lanchonete Bacanga</h1>
+    <div class="header">
+        <h1>Mesas da Lanchonete Bacanga</h1>
+    </div>
+
     <div class="mesa-container">
-        <!-- Criar 5 mesas -->
-        <div class="mesa" data-mesa="1">
+        <div class="mesa" id="mesa1">
             <h2>Mesa 1</h2>
-            <input type="text" class="item" placeholder="Produto">
-            <input type="number" class="valor" placeholder="Valor">
-            <input type="number" class="quantidade" placeholder="Quantidade">
-            <button class="adicionar">Adicionar</button>
-            <button class="limpar">Limpar</button>
-            <div class="resumo"></div>
-            <div class="qr-code"></div>
+            <div class="mesa-info">
+                <span id="mesa1-total">Total: R$ 0,00</span>
+                <button onclick="gerarQRCode(1)">Gerar QR Code</button>
+                <button onclick="limparMesa(1)">Limpar</button>
+            </div>
         </div>
-        <div class="mesa" data-mesa="2">
+        <div class="mesa" id="mesa2">
             <h2>Mesa 2</h2>
-            <input type="text" class="item" placeholder="Produto">
-            <input type="number" class="valor" placeholder="Valor">
-            <input type="number" class="quantidade" placeholder="Quantidade">
-            <button class="adicionar">Adicionar</button>
-            <button class="limpar">Limpar</button>
-            <div class="resumo"></div>
-            <div class="qr-code"></div>
+            <div class="mesa-info">
+                <span id="mesa2-total">Total: R$ 0,00</span>
+                <button onclick="gerarQRCode(2)">Gerar QR Code</button>
+                <button onclick="limparMesa(2)">Limpar</button>
+            </div>
         </div>
-        <div class="mesa" data-mesa="3">
+        <div class="mesa" id="mesa3">
             <h2>Mesa 3</h2>
-            <input type="text" class="item" placeholder="Produto">
-            <input type="number" class="valor" placeholder="Valor">
-            <input type="number" class="quantidade" placeholder="Quantidade">
-            <button class="adicionar">Adicionar</button>
-            <button class="limpar">Limpar</button>
-            <div class="resumo"></div>
-            <div class="qr-code"></div>
+            <div class="mesa-info">
+                <span id="mesa3-total">Total: R$ 0,00</span>
+                <button onclick="gerarQRCode(3)">Gerar QR Code</button>
+                <button onclick="limparMesa(3)">Limpar</button>
+            </div>
         </div>
-        <div class="mesa" data-mesa="4">
+        <div class="mesa" id="mesa4">
             <h2>Mesa 4</h2>
-            <input type="text" class="item" placeholder="Produto">
-            <input type="number" class="valor" placeholder="Valor">
-            <input type="number" class="quantidade" placeholder="Quantidade">
-            <button class="adicionar">Adicionar</button>
-            <button class="limpar">Limpar</button>
-            <div class="resumo"></div>
-            <div class="qr-code"></div>
+            <div class="mesa-info">
+                <span id="mesa4-total">Total: R$ 0,00</span>
+                <button onclick="gerarQRCode(4)">Gerar QR Code</button>
+                <button onclick="limparMesa(4)">Limpar</button>
+            </div>
         </div>
-        <div class="mesa" data-mesa="5">
+        <div class="mesa" id="mesa5">
             <h2>Mesa 5</h2>
-            <input type="text" class="item" placeholder="Produto">
-            <input type="number" class="valor" placeholder="Valor">
-            <input type="number" class="quantidade" placeholder="Quantidade">
-            <button class="adicionar">Adicionar</button>
-            <button class="limpar">Limpar</button>
-            <div class="resumo"></div>
-            <div class="qr-code"></div>
+            <div class="mesa-info">
+                <span id="mesa5-total">Total: R$ 0,00</span>
+                <button onclick="gerarQRCode(5)">Gerar QR Code</button>
+                <button onclick="limparMesa(5)">Limpar</button>
+            </div>
         </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
