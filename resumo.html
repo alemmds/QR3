@@ -3,103 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo do Pedido</title>
+    <title>Resumo do Pedido - Mesa</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
+            font-size: 18px;
         }
-
         h1 {
-            font-size: 36px; /* Aumenta o tamanho do cabeçalho principal */
-            text-align: center;
-            color: #4CAF50;
-            margin-bottom: 40px;
+            font-size: 24px;
         }
-
-        h2 {
-            font-size: 28px; /* Aumenta o tamanho do título das mesas */
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .pedido-item {
-            font-size: 22px; /* Aumenta o tamanho dos itens do pedido */
-            margin-bottom: 10px;
-        }
-
-        .pedido-valor {
-            font-size: 22px; /* Aumenta o tamanho dos valores */
-            font-weight: bold;
-            color: #000;
-        }
-
         .total {
-            font-size: 28px; /* Aumenta o tamanho do total */
-            font-weight: bold;
-            margin-top: 30px;
-            color: #d9534f; /* Cor vermelha para destacar o total */
-            text-align: center;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
     <h1>Resumo do Pedido - Mesa <span id="mesaNumero"></span></h1>
 
-    <div id="resumo">
-        <!-- O resumo do pedido será inserido aqui via JavaScript -->
-    </div>
+    <div id="resumo"></div>
 
-    <div class="total" id="total">
-        <!-- O valor total será inserido aqui via JavaScript -->
-    </div>
+    <div class="total" id="total">Total: R$ 0,00</div>
 
     <script>
-        // Simula o carregamento do resumo de um pedido da mesa com base no parâmetro 'mesa'
         const urlParams = new URLSearchParams(window.location.search);
         const mesa = urlParams.get('mesa');
         document.getElementById('mesaNumero').textContent = mesa;
 
-        // Simulação dos dados de pedido para cada mesa
-        const pedidosPorMesa = {
-            '1': [
-                { item: 'Café', preco: 5.00, quantidade: 2 },
-                { item: 'Pão de Queijo', preco: 3.50, quantidade: 3 }
-            ],
-            '2': [
-                { item: 'Cappuccino', preco: 7.00, quantidade: 1 },
-                { item: 'Croissant', preco: 6.00, quantidade: 2 }
-            ],
-            '3': [
-                { item: 'Suco de Laranja', preco: 4.50, quantidade: 1 },
-                { item: 'Bolo de Cenoura', preco: 8.00, quantidade: 1 }
-            ],
-            '4': [
-                { item: 'Pão Frances', preco: 1.00, quantidade: 6 },
-                { item: 'Manteiga', preco: 2.00, quantidade: 1 }
-            ],
-            '5': [
-                { item: 'Tapioca', preco: 6.50, quantidade: 2 },
-                { item: 'Chocolate Quente', preco: 5.00, quantidade: 1 }
-            ]
-        };
+        // Dados simulados para os pedidos
+        const pedidos = [
+            { item: 'Café', preco: 5.00, quantidade: 2 },
+            { item: 'Pão de Queijo', preco: 3.50, quantidade: 3 }
+        ];
 
-        const pedidos = pedidosPorMesa[mesa] || [];
         let total = 0;
-
-        const resumoDiv = document.getElementById('resumo');
-
         pedidos.forEach(pedido => {
-            const itemDiv = document.createElement('div');
-            itemDiv.classList.add('pedido-item');
-            itemDiv.textContent = `${pedido.quantidade}x ${pedido.item} - R$${(pedido.preco * pedido.quantidade).toFixed(2)}`;
-            resumoDiv.appendChild(itemDiv);
+            const div = document.createElement('div');
+            div.textContent = `${pedido.quantidade}x ${pedido.item} - R$ ${(pedido.preco * pedido.quantidade).toFixed(2)}`;
+            document.getElementById('resumo').appendChild(div);
             total += pedido.preco * pedido.quantidade;
         });
 
-        // Exibe o total
-        document.getElementById('total').textContent = `Total: R$${total.toFixed(2)}`;
+        document.getElementById('total').textContent = `Total: R$ ${total.toFixed(2)}`;
     </script>
 </body>
 </html>
