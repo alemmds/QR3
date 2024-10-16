@@ -4,26 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Resumo dos Pedidos</title>
+    <title>Resumo de Pedidos</title>
 </head>
 <body>
-    <h1>Resumo dos Pedidos</h1>
-    <div id="resumo"></div>
-    <button id="voltar">Voltar</button>
+    <div class="container">
+        <h1>Resumo de Pedidos - Mesa <span id="mesa-number"></span></h1>
+        <div id="resumo-pedidos">
+            <ul id="pedidos-list"></ul>
+        </div>
+        <div class="total">
+            <strong>Valor Total: R$ <span id="total-valor">0.00</span></strong>
+        </div>
+        <button onclick="voltar()" class="botao">Voltar</button>
+        <button onclick="editar()" class="botao">Editar</button>
+    </div>
 
+    <script src="script.js"></script>
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const mesa = params.get('mesa');
-        
-        // Carrega os dados da mesa correspondente
-        document.getElementById('resumo').innerHTML = `
-            <h2>Mesa ${mesa}</h2>
-            <p>Aqui você verá os pedidos feitos.</p>
-        `;
+        const urlParams = new URLSearchParams(window.location.search);
+        const mesaId = urlParams.get('mesa');
 
-        document.getElementById('voltar').onclick = function() {
-            window.history.back();
+        document.getElementById('mesa-number').textContent = mesaId;
+
+        // Função para exibir os pedidos da mesa
+        function exibirPedidos() {
+            const pedidos = JSON.parse(localStorage.getItem(`pedidosMesa${mesaId}`)) || [];
+            const pedidosList = document.getElementById('pedidos-list');
+            const totalValor = document.getElementById('total-valor');
+            let total = 0;
+
+            pedidosList.innerHTML = '';
+
+            pedidos.forEach((pedido, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${pedido.nome} - R$ ${pedido.valor.toFixed(2)} (Quantidade: ${pedido.quantidade})`;
+                pedidosList.appendChild(li);
+                total += pedido.valor * pedido.quantidade;
+            });
+
+            totalValor.textContent = total.toFixed(2);
         }
+
+        function voltar() {
+            window.location.href = 'index.html'; // Voltar para a página principal
+        }
+
+        function editar() {
+            window.location.href = `index.html?mesa=${mesaId}`; // Redirecionar para a página de pedidos
+        }
+
+        // Carregar pedidos ao abrir a página
+        window.onload = function() {
+            exibirPedidos();
+        };
     </script>
 </body>
 </html>
