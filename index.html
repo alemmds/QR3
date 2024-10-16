@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesas da Lanchonete Bacanga</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="qrcode.min.js"></script> <!-- Importando a biblioteca QR Code -->
 </head>
 <body>
     <h1>Mesas da Lanchonete Bacanga</h1>
     
     <div class="mesa-container">
-        <!-- Repetindo o layout para 5 mesas -->
         <!-- Mesa 1 -->
         <div class="mesa">
             <h2>Mesa 1</h2>
@@ -19,11 +19,11 @@
             <input type="number" id="quantidade-produto1" placeholder="Quantidade">
             <button onclick="adicionarPedido(1)">Adicionar</button>
             <p id="mesa1-total">Total: R$ 0,00</p>
-            <button id="mesa1-qrcode" style="display:none;" onclick="gerarQRCode(1)">Resumo</button>
+            <div id="mesa1-qrcode" style="display:none;"></div> <!-- QR Code -->
             <button onclick="limparMesa(1)">Limpar</button>
         </div>
 
-        <!-- Mesas 2 a 5 seguem o mesmo formato -->
+        <!-- Mesa 2 -->
         <div class="mesa">
             <h2>Mesa 2</h2>
             <input type="text" id="nome-produto2" placeholder="Nome do produto">
@@ -31,11 +31,11 @@
             <input type="number" id="quantidade-produto2" placeholder="Quantidade">
             <button onclick="adicionarPedido(2)">Adicionar</button>
             <p id="mesa2-total">Total: R$ 0,00</p>
-            <button id="mesa2-qrcode" style="display:none;" onclick="gerarQRCode(2)">Resumo</button>
+            <div id="mesa2-qrcode" style="display:none;"></div> <!-- QR Code -->
             <button onclick="limparMesa(2)">Limpar</button>
         </div>
 
-        <!-- Repita para as mesas 3, 4 e 5 -->
+        <!-- Mesas 3 a 5 seguem o mesmo formato -->
         <div class="mesa">
             <h2>Mesa 3</h2>
             <input type="text" id="nome-produto3" placeholder="Nome do produto">
@@ -43,11 +43,11 @@
             <input type="number" id="quantidade-produto3" placeholder="Quantidade">
             <button onclick="adicionarPedido(3)">Adicionar</button>
             <p id="mesa3-total">Total: R$ 0,00</p>
-            <button id="mesa3-qrcode" style="display:none;" onclick="gerarQRCode(3)">Resumo</button>
+            <div id="mesa3-qrcode" style="display:none;"></div> <!-- QR Code -->
             <button onclick="limparMesa(3)">Limpar</button>
         </div>
 
-        <!-- Repita para a mesa 4 -->
+        <!-- Mesa 4 -->
         <div class="mesa">
             <h2>Mesa 4</h2>
             <input type="text" id="nome-produto4" placeholder="Nome do produto">
@@ -55,11 +55,11 @@
             <input type="number" id="quantidade-produto4" placeholder="Quantidade">
             <button onclick="adicionarPedido(4)">Adicionar</button>
             <p id="mesa4-total">Total: R$ 0,00</p>
-            <button id="mesa4-qrcode" style="display:none;" onclick="gerarQRCode(4)">Resumo</button>
+            <div id="mesa4-qrcode" style="display:none;"></div> <!-- QR Code -->
             <button onclick="limparMesa(4)">Limpar</button>
         </div>
 
-        <!-- Repita para a mesa 5 -->
+        <!-- Mesa 5 -->
         <div class="mesa">
             <h2>Mesa 5</h2>
             <input type="text" id="nome-produto5" placeholder="Nome do produto">
@@ -67,7 +67,7 @@
             <input type="number" id="quantidade-produto5" placeholder="Quantidade">
             <button onclick="adicionarPedido(5)">Adicionar</button>
             <p id="mesa5-total">Total: R$ 0,00</p>
-            <button id="mesa5-qrcode" style="display:none;" onclick="gerarQRCode(5)">Resumo</button>
+            <div id="mesa5-qrcode" style="display:none;"></div> <!-- QR Code -->
             <button onclick="limparMesa(5)">Limpar</button>
         </div>
     </div>
