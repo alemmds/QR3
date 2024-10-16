@@ -1,48 +1,43 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo do Pedido - Mesa</title>
+    <title>Resumo dos Pedidos</title>
     <style>
         body {
-            font-size: 18px;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
         h1 {
+            text-align: center;
+            color: #2980b9;
             font-size: 24px;
         }
+        .pedido {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
         .total {
-            font-size: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
         }
     </style>
 </head>
 <body>
-    <h1>Resumo do Pedido - Mesa <span id="mesaNumero"></span></h1>
-
-    <div id="resumo"></div>
-
-    <div class="total" id="total">Total: R$ 0,00</div>
-
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const mesa = urlParams.get('mesa');
-        document.getElementById('mesaNumero').textContent = mesa;
-
-        // Dados simulados para os pedidos
-        const pedidos = [
-            { item: 'Café', preco: 5.00, quantidade: 2 },
-            { item: 'Pão de Queijo', preco: 3.50, quantidade: 3 }
-        ];
-
-        let total = 0;
-        pedidos.forEach(pedido => {
-            const div = document.createElement('div');
-            div.textContent = `${pedido.quantidade}x ${pedido.item} - R$ ${(pedido.preco * pedido.quantidade).toFixed(2)}`;
-            document.getElementById('resumo').appendChild(div);
-            total += pedido.preco * pedido.quantidade;
-        });
-
-        document.getElementById('total').textContent = `Total: R$ ${total.toFixed(2)}`;
-    </script>
+    <h1>Resumo dos Pedidos da Mesa</h1>
+    <div class="pedido">
+        <p>Item: Café</p>
+        <p>Quantidade: 2</p>
+        <p>Preço: R$ 5,00</p>
+    </div>
+    <div class="pedido">
+        <p>Item: Pão de Queijo</p>
+        <p>Quantidade: 3</p>
+        <p>Preço: R$ 7,50</p>
+    </div>
+    <p class="total">Total: R$ 12,50</p>
 </body>
 </html>
