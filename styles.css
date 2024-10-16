@@ -4,98 +4,86 @@ body, html {
     padding: 0;
     font-family: Arial, sans-serif;
     background-color: #f7f7f7;
-    color: #333;
 }
 
-/* Container principal */
-.container {
+/* Estilo do cabeçalho */
+.header {
+    background-color: #4CAF50;
     padding: 20px;
-    max-width: 500px;
-    margin: 0 auto;
-    background-color: white;
+    text-align: center;
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 24px;
+}
+
+/* Layout horizontal para mesas */
+.mesa-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.mesa {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+    padding: 20px;
+    width: 250px;
+    min-width: 250px;
 }
 
-/* Cabeçalho */
-h1 {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-/* Resumo dos pedidos */
-#resumo-pedidos {
-    margin-bottom: 20px;
-}
-
-#pedidos-list {
-    list-style-type: none;
-    padding: 0;
+.mesa h2 {
     margin: 0;
-}
-
-#pedidos-list li {
     font-size: 18px;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-/* Total dos pedidos */
-.total {
-    font-size: 20px;
-    text-align: right;
-    margin-bottom: 20px;
-    font-weight: bold;
+    text-align: center;
     color: #333;
 }
 
-/* Botões */
-.buttons {
-    display: flex;
-    justify-content: space-between;
+.mesa-info {
+    margin-top: 10px;
 }
 
-.botao {
-    padding: 10px 20px;
+.mesa-info span {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.mesa-info button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
     font-size: 16px;
-    width: 45%;
-    text-align: center;
+    cursor: pointer;
 }
 
-.botao:hover {
+.mesa-info button:hover {
     background-color: #0056b3;
-}
-
-.botao:active {
-    background-color: #003d80;
 }
 
 /* Mobile responsiveness */
 @media screen and (max-width: 600px) {
-    .container {
-        padding: 15px;
+    .mesa {
+        width: 200px;
+        min-width: 200px;
     }
 
-    h1 {
-        font-size: 20px;
-    }
-
-    #pedidos-list li {
+    .mesa h2 {
         font-size: 16px;
     }
 
-    .total {
-        font-size: 18px;
-    }
-
-    .botao {
+    .mesa-info button {
         font-size: 14px;
     }
 }
