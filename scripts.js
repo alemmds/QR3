@@ -1,4 +1,4 @@
-// Definindo as mesas
+// *Definindo as mesas
 let mesas = {
     1: { total: 0, pedidos: [] },
     2: { total: 0, pedidos: [] },
