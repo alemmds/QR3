@@ -1,43 +1,57 @@
-// Definindo as mesas
-const mesas = [1, 2, 3, 4, 5];
-const mesasContainer = document.getElementById("mesas");
+let mesas = {
+    1: { total: 0, pedidos: [] },
+    2: { total: 0, pedidos: [] },
+    3: { total: 0, pedidos: [] },
+    4: { total: 0, pedidos: [] },
+    5: { total: 0, pedidos: [] }
+};
 
-// Função para limpar a mesa
-function limparMesa(mesa) {
-    const qrContainer = document.getElementById(`qrcode-${mesa}`);
-    qrContainer.innerHTML = ""; // Limpa o QR Code
-    document.getElementById(`total-${mesa}`).textContent = "Total: R$ 0,00"; // Reseta o total
-}
+function adicionarPedido(mesa) {
+    const produto = document.getElementById(`produto-${mesa}`).value;
+    const valor = parseFloat(document.getElementById(`valor-${mesa}`).value);
+    const quantidade = parseInt(document.getElementById(`quantidade-${mesa}`).value);
 
-// Função para gerar o QR Code
-function gerarQRCode(mesa) {
-    const totalElement = document.getElementById(`total-${mesa}`);
-    const totalText = totalElement.textContent;
-    
-    // Verifica se o total é maior que 0
-    if (parseFloat(totalText.replace("Total: R$ ", "").replace(",", ".")) > 0) {
-        const qrContainer = document.getElementById(`qrcode-${mesa}`);
-        qrContainer.innerHTML = ""; // Limpa o QR code anterior
-        new QRCode(qrContainer, {
-            text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
-            width: 128,
-            height: 128
-        });
+    if (produto && valor > 0 && quantidade > 0) {
+        mesas[mesa].pedidos.push({ produto, valor, quantidade });
+        calcularTotal(mesa);
+        gerarQRCode(mesa);
     } else {
-        alert("O valor total deve ser maior que 0 para gerar o QR Code.");
+        alert("Preencha todos os campos corretamente!");
     }
 }
 
-// Criar mesas dinamicamente
-mesas.forEach(mesa => {
-    const divMesa = document.createElement('div');
-    divMesa.classList.add('mesa');
-    divMesa.innerHTML = `
-        <h2>Mesa ${mesa}</h2>
-        <div id="qrcode-${mesa}" class="qrcode"></div>
-        <p class="total" id="total-${mesa}">Total: R$ 0,00</p>
-        <button onclick="gerarQRCode(${mesa})">Gerar QR Code</button>
-        <button onclick="limparMesa(${mesa})">Limpar</button>
-    `;
-    mesasContainer.appendChild(divMesa);
-});
+function calcularTotal(mesa) {
+    const totalMesa = mesas[mesa].pedidos.reduce((acc, pedido) => acc + (pedido.valor * pedido.quantidade), 0);
+    mesas[mesa].total = totalMesa;
+    document.getElementById(`total-${mesa}`).textContent = `Total: R$ ${totalMesa.toFixed(2)}`;
+}
+
+function gerarQRCode(mesa) {
+    const totalMesa = mesas[mesa].total;
+    const qrcodeDiv = document.getElementById(`qrcode-${mesa}`);
+    qrcodeDiv.innerHTML = ''; // Limpa o QR code anterior
+
+    if (totalMesa > 0) {
+        const url = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`;
+        new QRCode(qrcodeDiv, {
+            text: url,
+            width: 128,
+            height: 128
+        });
+    }
+}
+
+function limparMesa(mesa) {
+    mesas[mesa].pedidos = [];
+    mesas[mesa].total = 0;
+    document.getElementById(`produto-${mesa}`).value = '';
+    document.getElementById(`valor-${mesa}`).value = '';
+    document.getElementById(`quantidade-${mesa}`).value = '';
+    document.getElementById(`total-${mesa}`).textContent = 'Total: R$ 0,00';
+    document.getElementById(`qrcode-${mesa}`).innerHTML = '';
+}
+
+function atualizarMesa(mesa) {
+    const url = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`;
+    window.location.href = url; // Redireciona para a página de resumo da mesa
+}
