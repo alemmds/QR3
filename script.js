@@ -14,7 +14,10 @@ function loadMesa(mesa) {
 }
 
 function adicionarPedido(mesa, nome, valor, quantidade, save = true) {
-    if (!nome || !valor || !quantidade) return;
+    if (!nome || !valor || !quantidade) {
+        alert('Por favor, preencha todos os campos!');
+        return;
+    }
 
     let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
 
@@ -77,7 +80,12 @@ document.querySelectorAll('.btnAdicionar').forEach(button => {
         let nome = document.getElementById(`nomeMesa${mesa}`).value;
         let valor = document.getElementById(`valorMesa${mesa}`).value;
         let quantidade = document.getElementById(`quantidadeMesa${mesa}`).value;
+
+        // Limpa os campos após adicionar
         adicionarPedido(mesa, nome, valor, quantidade);
+        document.getElementById(`nomeMesa${mesa}`).value = '';
+        document.getElementById(`valorMesa${mesa}`).value = '';
+        document.getElementById(`quantidadeMesa${mesa}`).value = '';
     });
 });
 
