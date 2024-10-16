@@ -1,58 +1,51 @@
-// Função para adicionar pedido
-function adicionarPedido(mesaId) {
-    const produto = document.getElementById(`produto-${mesaId}`).value;
-    const valor = parseFloat(document.getElementById(`valor-${mesaId}`).value);
-    const quantidade = parseInt(document.getElementById(`quantidade-${mesaId}`).value);
-
-    if (!produto || isNaN(valor) || isNaN(quantidade)) {
-        alert('Preencha todos os campos corretamente.');
+function adicionarPedido(mesa) {
+    const item = document.getElementById(`item-mesa${mesa}`).value;
+    const valor = parseFloat(document.getElementById(`valor-mesa${mesa}`).value);
+    const quantidade = parseInt(document.getElementById(`quantidade-mesa${mesa}`).value);
+    if (!item || isNaN(valor) || isNaN(quantidade)) {
+        alert("Por favor, preencha todos os campos corretamente.");
         return;
     }
 
-    const pedidos = JSON.parse(localStorage.getItem('pedidosMesa' + mesaId)) || [];
-    pedidos.push({ produto, valor, quantidade });
+    let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}-pedidos`)) || [];
+    pedidos.push({ item, valor, quantidade });
+    localStorage.setItem(`mesa${mesa}-pedidos`, JSON.stringify(pedidos));
 
-    localStorage.setItem('pedidosMesa' + mesaId, JSON.stringify(pedidos));
-    calcularTotal(mesaId);
-    gerarQRCode(mesaId);
+    atualizarTotal(mesa);
 }
 
-// Função para calcular o total de pedidos de cada mesa
-function calcularTotal(mesaId) {
-    const pedidos = JSON.parse(localStorage.getItem('pedidosMesa' + mesaId)) || [];
-    let total = 0;
-    pedidos.forEach(pedido => {
-        total += pedido.valor * pedido.quantidade;
-    });
+function atualizarTotal(mesa) {
+    const pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}-pedidos`)) || [];
+    let total = pedidos.reduce((acc, pedido) => acc + (pedido.valor * pedido.quantidade), 0);
 
-    document.getElementById(`total-${mesaId}`).innerText = `Total: R$ ${total.toFixed(2)}`;
+    document.getElementById(`total-mesa${mesa}`).innerText = `Total: R$ ${total.toFixed(2)}`;
     
-    // Exibe o botão de resumo se o total for maior que 0
-    const resumoBtn = document.getElementById(`resumo-${mesaId}`);
     if (total > 0) {
-        resumoBtn.style.display = 'block';
+        document.getElementById(`resumo-btn-mesa${mesa}`).style.display = 'block';
+        gerarQRCode(mesa);
     } else {
-        resumoBtn.style.display = 'none';
+        document.getElementById(`resumo-btn-mesa${mesa}`).style.display = 'none';
     }
 }
 
-// Função para gerar o QR Code
-function gerarQRCode(mesaId) {
-    const qrContainer = document.getElementById(`qrcode-${mesaId}`);
-    qrContainer.innerHTML = '';  // Limpa o QR Code anterior
+function limparMesa(mesa) {
+    localStorage.removeItem(`mesa${mesa}-pedidos`);
+    document.getElementById(`total-mesa${mesa}`).innerText = 'Total: R$ 0,00';
+    document.getElementById(`qrcode-mesa${mesa}`).innerHTML = '';
+    document.getElementById(`resumo-btn-mesa${mesa}`).style.display = 'none';
+}
 
-    const qrCodeUrl = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesaId}`;
-    const qrcode = new QRCode(qrContainer, {
-        text: qrCodeUrl,
+function gerarQRCode(mesa) {
+    const qrCodeDiv = document.getElementById(`qrcode-mesa${mesa}`);
+    qrCodeDiv.innerHTML = ''; // Limpa o QR code existente
+
+    const qrcode = new QRCode(qrCodeDiv, {
+        text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
         width: 128,
         height: 128
     });
 }
 
-// Função para limpar os pedidos da mesa
-function limparMesa(mesaId) {
-    localStorage.removeItem('pedidosMesa' + mesaId);
-    document.getElementById(`total-${mesaId}`).innerText = 'Total: R$ 0,00';
-    document.getElementById(`qrcode-${mesaId}`).innerHTML = '';
-    document.getElementById(`resumo-${mesaId}`).style.display = 'none';
+function gerarResumo(mesa) {
+    window.location.href = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`;
 }
