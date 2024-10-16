@@ -1,74 +1,101 @@
+/* Estilo geral */
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
-    background-color: #f9f9f9;
     margin: 0;
-}
-
-h1 {
+    padding: 0;
+    background-color: #f4f4f4;
     color: #333;
-    text-align: center;
 }
 
+/* Cabeçalho */
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 20px;
+}
+
+/* Contêiner principal das mesas */
 .mesas-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
 }
 
+/* Cada mesa terá um estilo similar */
 .mesa {
     background-color: #fff;
     border: 1px solid #ddd;
-    padding: 20px;
-    width: 90%;
-    max-width: 400px; /* Limita a largura máxima para dispositivos grandes */
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    border-radius: 8px; /* Bordas arredondadas */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin: 10px;
+    width: calc(100% / 2 - 40px); /* Mesas lado a lado em telas maiores */
+    max-width: 300px;
 }
 
-input {
-    display: block;
-    margin: 10px 0;
-    padding: 10px; /*
-
- Aumenta a área clicável */
-    width: calc(100% - 22px); /* Responsivo */
-    border: 1px solid #ddd;
-    border-radius: 5px; /* Bordas arredondadas */
+/* Cabeçalho de cada mesa */
+.mesa h2 {
+    margin-top: 0;
+    color: #2980b9;
 }
 
-button {
+/* Inputs e botões dentro de cada mesa */
+.mesa input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Botões de ação */
+.mesa button {
     padding: 10px 15px;
-    background-color: #4CAF50; /* Verde */
-    color: white;
+    margin-right: 5px;
     border: none;
-    border-radius: 5px; /* Bordas arredondadas */
+    background-color: #2980b9;
+    color: white;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px; /* Aumenta a fonte */
 }
 
-button:hover {
-    background-color: #45a049; /* Verde escuro ao passar o mouse */
+.mesa button:hover {
+    background-color: #3498db;
 }
 
 .qrcode {
-    margin-top: 15px; /* Margem superior */
-    text-align: center; /* Centraliza o QR Code */
+    margin-top: 15px;
 }
 
+/* Link do resumo */
 .resumo-link {
     display: block;
     margin-top: 10px;
-    color: #4CAF50; /* Verde */
-    text-decoration: none; /* Remove o sublinhado */
+    color: #2980b9;
+    text-decoration: none;
 }
 
 .resumo-link:hover {
-    text-decoration: underline; /* Sublinhado ao passar o mouse */
+    text-decoration: underline;
 }
 
+/* Total do pedido */
 .total {
+    font-size: 16px;
     font-weight: bold;
-    margin-top: 20px; /* Espaçamento superior */
+    margin-top: 10px;
+}
+
+/* Estilo para dispositivos móveis */
+@media (max-width: 600px) {
+    .mesa {
+        width: 100%;
+        max-width: none;
+    }
+    
+    .mesas-container {
+        flex-direction: column;
+        align-items: center;
+    }
 }
