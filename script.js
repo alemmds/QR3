@@ -1,4 +1,3 @@
-// Definindo as mesas
 let mesas = {
     1: { total: 0, pedidos: [] },
     2: { total: 0, pedidos: [] },
@@ -7,7 +6,6 @@ let mesas = {
     5: { total: 0, pedidos: [] }
 };
 
-// Função para gerar HTML das mesas
 function gerarMesas() {
     const containerMesas = document.getElementById('mesas');
     for (let i = 1; i <= 5; i++) {
@@ -22,13 +20,12 @@ function gerarMesas() {
                 <button onclick="mostrarResumo(${i})">Mostrar Resumo e QR Code</button>
                 <div class="qrcode" id="qrcode-${i}"></div>
                 <button onclick="limparMesa(${i})">LIMPAR</button>
-                <button onclick="atualizarMesa(${i})">ATUALIZAR</button>
+                <button onclick="resumoMesa(${i})">RESUMO</button>
             </div>
         `;
     }
 }
 
-// Função para adicionar pedidos
 function adicionarPedido(mesa) {
     const produto = document.getElementById(`produto-${mesa}`).value;
     const valor = parseFloat(document.getElementById(`valor-${mesa}`).value);
@@ -42,18 +39,16 @@ function adicionarPedido(mesa) {
     }
 }
 
-// Função para calcular o total da mesa
 function calcularTotal(mesa) {
     const totalMesa = mesas[mesa].pedidos.reduce((acc, pedido) => acc + (pedido.valor * pedido.quantidade), 0);
     mesas[mesa].total = totalMesa;
     document.getElementById(`total-${mesa}`).textContent = `Total: R$ ${totalMesa.toFixed(2)}`;
 }
 
-// Função para gerar QR code
 function gerarQRCode(mesa) {
     const totalMesa = mesas[mesa].total;
     const qrcodeDiv = document.getElementById(`qrcode-${mesa}`);
-    qrcodeDiv.innerHTML = ''; // Limpa o QR code anterior
+    qrcodeDiv.innerHTML = ''; 
 
     if (totalMesa > 0) {
         const url = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`;
@@ -65,9 +60,8 @@ function gerarQRCode(mesa) {
     }
 }
 
-// Função para mostrar resumo e gerar QR code
 function mostrarResumo(mesa) {
-    calcularTotal(mesa); // Atualiza o total da mesa
+    calcularTotal(mesa); 
     const totalMesa = mesas[mesa].total;
 
     if (totalMesa > 0) {
@@ -77,7 +71,6 @@ function mostrarResumo(mesa) {
     }
 }
 
-// Função para limpar mesa
 function limparMesa(mesa) {
     mesas[mesa].pedidos = [];
     mesas[mesa].total = 0;
@@ -85,13 +78,11 @@ function limparMesa(mesa) {
     document.getElementById(`valor-${mesa}`).value = '';
     document.getElementById(`quantidade-${mesa}`).value = '';
     document.getElementById(`total-${mesa}`).textContent = 'Total: R$ 0,00';
-    document.getElementById(`qrcode-${mesa}`).innerHTML = ''; // Remove QR code
+    document.getElementById(`qrcode-${mesa}`).innerHTML = ''; 
 }
 
-// Função para atualizar mesa (exemplo simples para manter a estrutura)
-function atualizarMesa(mesa) {
-    // Aqui pode-se implementar a lógica de alteração de pedidos
-    alert(`Atualizar pedidos da Mesa ${mesa}`);
+function resumoMesa(mesa) {
+    window.location.href = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`;
 }
 
 // Gerar mesas ao carregar a página
