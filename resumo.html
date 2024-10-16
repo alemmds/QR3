@@ -9,35 +9,58 @@
             font-family: Arial, sans-serif;
             padding: 20px;
             background-color: #f4f4f4;
+            color: #333;
         }
         h1 {
             text-align: center;
             color: #2980b9;
-            font-size: 24px;
+            font-size: 28px;
+            margin-bottom: 20px;
         }
         .pedido {
             margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .pedido p {
+            margin: 5px 0;
             font-size: 18px;
         }
         .total {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
-            color: #2c3e50;
+            color: #27ae60; /* Verde para total */
+            text-align: right;
+            margin-top: 20px;
+        }
+        .mesa-info {
+            margin-bottom: 20px;
+            font-size: 20px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <h1>Resumo dos Pedidos da Mesa</h1>
+    
+    <div class="mesa-info">Mesa: <strong id="mesa-numero">1</strong></div>
+
     <div class="pedido">
         <p>Item: Café</p>
         <p>Quantidade: 2</p>
-        <p>Preço: R$ 5,00</p>
+        <p>Preço Unitário: R$ 5,00</p>
+        <p>Total: R$ 10,00</p>
     </div>
     <div class="pedido">
         <p>Item: Pão de Queijo</p>
         <p>Quantidade: 3</p>
-        <p>Preço: R$ 7,50</p>
+        <p>Preço Unitário: R$ 7,50</p>
+        <p>Total: R$ 22,50</p>
     </div>
-    <p class="total">Total: R$ 12,50</p>
+    
+    <p class="total">Total Geral: R$ 32,50</p>
 </body>
 </html>
