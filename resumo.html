@@ -9,21 +9,28 @@
 <body>
     <div class="container">
         <h1>Resumo de Pedidos - Mesa <span id="mesa-number"></span></h1>
+
+        <!-- Resumo dos pedidos -->
         <div id="resumo-pedidos">
             <ul id="pedidos-list"></ul>
         </div>
+
+        <!-- Total dos pedidos -->
         <div class="total">
-            <strong>Valor Total: R$ <span id="total-valor">0.00</span></strong>
+            <strong>Total: R$ <span id="total-valor">0.00</span></strong>
         </div>
-        <button onclick="voltar()" class="botao">Voltar</button>
-        <button onclick="editar()" class="botao">Editar</button>
+
+        <!-- Botões de navegação -->
+        <div class="buttons">
+            <button onclick="voltar()" class="botao">Voltar</button>
+            <button onclick="editar()" class="botao">Editar</button>
+        </div>
     </div>
 
     <script src="script.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const mesaId = urlParams.get('mesa');
-
         document.getElementById('mesa-number').textContent = mesaId;
 
         // Função para exibir os pedidos da mesa
@@ -35,14 +42,18 @@
 
             pedidosList.innerHTML = '';
 
-            pedidos.forEach((pedido, index) => {
-                const li = document.createElement('li');
-                li.textContent = `${pedido.nome} - R$ ${pedido.valor.toFixed(2)} (Quantidade: ${pedido.quantidade})`;
-                pedidosList.appendChild(li);
-                total += pedido.valor * pedido.quantidade;
-            });
+            if (pedidos.length === 0) {
+                pedidosList.innerHTML = '<li>Nenhum pedido registrado</li>';
+            } else {
+                pedidos.forEach((pedido, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${pedido.nome} - R$ ${pedido.valor.toFixed(2)} (Qtd: ${pedido.quantidade})`;
+                    pedidosList.appendChild(li);
+                    total += pedido.valor * pedido.quantidade;
+                });
 
-            totalValor.textContent = total.toFixed(2);
+                totalValor.textContent = total.toFixed(2);
+            }
         }
 
         function voltar() {
