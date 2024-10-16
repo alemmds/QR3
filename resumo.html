@@ -7,21 +7,21 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Resumo dos Pedidos - Mesa X</h1>
-    
-    <div id="resumo-pedidos">
-        <!-- Os pedidos serão exibidos aqui -->
-    </div>
+    <h1 id="mesa-title">Resumo dos Pedidos - Mesa X</h1>
+
+    <div id="resumo-pedidos"></div>
 
     <button onclick="voltar()">VOLTAR</button>
 
     <script>
-        // Função para carregar os pedidos armazenados localmente
+        // Função para carregar os pedidos da mesa específica
         function carregarPedidos() {
-            const pedidos = JSON.parse(localStorage.getItem('pedidosMesaX')) || [];
+            const urlParams = new URLSearchParams(window.location.search);
+            const mesaId = urlParams.get('mesa');
+            const pedidos = JSON.parse(localStorage.getItem('pedidosMesa' + mesaId)) || [];
 
+            document.getElementById('mesa-title').innerText = `Resumo dos Pedidos - Mesa ${mesaId}`;
             const resumoElement = document.getElementById('resumo-pedidos');
-            resumoElement.innerHTML = '';  // Limpa a área para evitar duplicação
 
             pedidos.forEach((pedido, index) => {
                 const pedidoElement = document.createElement('div');
@@ -32,53 +32,29 @@
                     <p>Produto: ${pedido.produto}</p>
                     <p>Valor: R$ ${pedido.valor.toFixed(2)}</p>
                     <p>Quantidade: ${pedido.quantidade}</p>
-                    <button class="excluir-btn" onclick="excluirPedido(${index})">-</button>
-                    <button onclick="editarResumo(${index})">EDITAR</button>
+                    <button class="excluir-btn" onclick="excluirPedido(${index}, ${mesaId})">-</button>
                 `;
 
                 resumoElement.appendChild(pedidoElement);
             });
         }
 
-        // Função para editar pedidos
-        function editarResumo(pedidoId) {
-            const pedidos = JSON.parse(localStorage.getItem('pedidosMesaX')) || [];
-            const pedido = pedidos[pedidoId];
-
-            let produto = prompt("Digite o novo nome do produto:", pedido.produto);
-            let valor = prompt("Digite o novo valor:", pedido.valor);
-            let quantidade = prompt("Digite a nova quantidade:", pedido.quantidade);
-
-            if (produto && valor && quantidade) {
-                // Atualiza os dados do pedido
-                pedidos[pedidoId] = { produto, valor: parseFloat(valor), quantidade: parseInt(quantidade) };
-
-                // Salva os dados atualizados no localStorage
-                localStorage.setItem('pedidosMesaX', JSON.stringify(pedidos));
-
-                // Recarrega os pedidos na página
-                carregarPedidos();
-            } else {
-                alert("Edição cancelada.");
-            }
-        }
-
         // Função para excluir pedidos
-        function excluirPedido(pedidoId) {
-            let pedidos = JSON.parse(localStorage.getItem('pedidosMesaX')) || [];
+        function excluirPedido(pedidoId, mesaId) {
+            let pedidos = JSON.parse(localStorage.getItem('pedidosMesa' + mesaId)) || [];
 
-            pedidos.splice(pedidoId, 1);  // Remove o pedido selecionado
-            localStorage.setItem('pedidosMesaX', JSON.stringify(pedidos));  // Atualiza o armazenamento
+            pedidos.splice(pedidoId, 1);
+            localStorage.setItem('pedidosMesa' + mesaId, JSON.stringify(pedidos));
 
-            carregarPedidos();  // Recarrega os pedidos atualizados na página
+            // Recarrega a página
+            window.location.reload();
         }
 
         // Função para voltar à página das mesas
         function voltar() {
-            window.location.href = "index.html"; // Redireciona para a página principal
+            window.location.href = "index.html";
         }
 
-        // Carrega os pedidos ao abrir a página
         window.onload = carregarPedidos;
     </script>
 </body>
