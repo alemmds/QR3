@@ -1,4 +1,4 @@
-/* *Estilo geral */
+/* Estilo geral */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -30,7 +30,7 @@ h1 {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin: 10px;
-    width: calc(100% / 2 - 40px); /* Mesas lado a lado em telas maiores */
+    width: calc(100% / 2 - 40px);
     max-width: 300px;
     text-align: center;
 }
@@ -67,7 +67,7 @@ h1 {
     font-size: 18px;
     font-weight: bold;
     margin-top: 10px;
-    color: #27ae60; /* Verde para indicar total */
+    color: #27ae60;
 }
 
 /* Estilo para dispositivos móveis */
