@@ -1,66 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo dos Pedidos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        h1 {
-            text-align: center;
-            color: #2980b9;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-        .pedido {
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .pedido p {
-            margin: 5px 0;
-            font-size: 18px;
-        }
-        .total {
-            font-size: 24px;
-            font-weight: bold;
-            color: #27ae60; /* Verde para total */
-            text-align: right;
-            margin-top: 20px;
-        }
-        .mesa-info {
-            margin-bottom: 20px;
-            font-size: 20px;
-            text-align: center;
-        }
-    </style>
+    <title>Resumo dos Pedidos - Mesa X</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Resumo dos Pedidos da Mesa</h1>
+    <h1>Resumo dos Pedidos - Mesa X</h1>
     
-    <div class="mesa-info">Mesa: <strong id="mesa-numero">1</strong></div>
+    <div id="resumo-pedidos">
+        <!-- Exemplo de pedido listado aqui -->
+        <div class="pedido">
+            <p>Produto: Coxinha</p>
+            <p>Valor: R$ 5,00</p>
+            <p>Quantidade: 2</p>
+        </div>
+    </div>
 
-    <div class="pedido">
-        <p>Item: Café</p>
-        <p>Quantidade: 2</p>
-        <p>Preço Unitário: R$ 5,00</p>
-        <p>Total: R$ 10,00</p>
-    </div>
-    <div class="pedido">
-        <p>Item: Pão de Queijo</p>
-        <p>Quantidade: 3</p>
-        <p>Preço Unitário: R$ 7,50</p>
-        <p>Total: R$ 22,50</p>
-    </div>
-    
-    <p class="total">Total Geral: R$ 32,50</p>
+    <button onclick="editarResumo()">EDITAR</button>
+
+    <script>
+        function editarResumo() {
+            // Lógica para permitir edição de itens
+            let produto = prompt("Digite o novo nome do produto:");
+            let valor = prompt("Digite o novo valor:");
+            let quantidade = prompt("Digite a nova quantidade:");
+
+            if (produto && valor && quantidade) {
+                alert("Resumo atualizado! (Aqui você faria a atualização real dos dados)");
+            } else {
+                alert("Edição cancelada.");
+            }
+        }
+    </script>
 </body>
 </html>
