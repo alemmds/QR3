@@ -1,153 +1,79 @@
-/* Configurações globais */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    color: #333;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
-h1 {
-    color: #ffffff;
-    background-color: #3b5998; /* Azul */
-    width: 100%;
-    text-align: center;
-    padding: 20px;
-    margin: 0;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.container {
-    max-width: 100%;
-    padding: 20px;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.card {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 20px;
-    padding: 20px;
-}
-
-.card h2 {
-    color: #3b5998;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-input[type="text"], input[type="number"] {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    background-color: #3b5998; /* Azul */
-    color: white;
-    padding: 10px 20px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    text-align: center;
-}
-
-button:hover {
-    background-color: #2d4373;
-}
-
-#qrcode {
-    text-align: center;
-    margin-top: 20px;
-}
-
-/* Estilo do botão de limpar */
-button.limpar {
-    background-color: #f44336; /* Vermelho */
-}
-
-button.limpar:hover {
-    background-color: #d32f2f;
-}
-
-/* Estilo do total acima do QR code */
-.total {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-/* Página de Resumo de Pedidos */
-#resumoPedidos {
-    padding: 20px;
-    text-align: left;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    width: 90%;
-    max-width: 400px;
-}
-
-#resumoPedidos p {
-    margin: 8px 0;
-}
-
-/* Botão Voltar */
-#voltarBtn {
-    background-color: #4caf50; /* Verde */
-    color: white;
-    padding: 10px 20px;
-    margin: 20px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    display: block;
-    width: 100%;
-}
-
-#voltarBtn:hover {
-    background-color: #388e3c;
-}
-
-/* Layout Mobile */
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-
-    .card {
-        margin: 10px 0;
-    }
-
-    button {
-        font-size: 16px;
-    }
-
-    input[type="text"], input[type="number"] {
-        font-size: 16px;
-    }
-}
-
-/* Estilo da barra de navegação ou título de página */
 .navbar {
     background-color: #3b5998;
     color: white;
-    text-align: center;
     padding: 15px;
-    font-size: 20px;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.mesa-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+}
+
+.mesa-card h2 {
+    margin: 0;
+    color: #3b5998;
+}
+
+.input-group {
+    margin-bottom: 10px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
     width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #3b5998;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2a3b7c;
+}
+
+.limpar {
+    background-color: #f44336;
+}
+
+.total {
+    margin-top: 15px;
+    font-size: 1.2em;
+    color: #3b5998;
+}
+
+#qrcode1, #qrcode2, #qrcode3, #qrcode4 {
+    margin-top: 15px;
 }
