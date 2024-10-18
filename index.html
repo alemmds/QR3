@@ -1,101 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mesas - Lanchonete Bacanga</title>
+    <meta name="theme-color" content="#000000"/>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <title>Mesas da Lanchonete Bacanga</title>
 </head>
 <body>
-    <header class="navbar">
+    <header>
         <h1>Mesas da Lanchonete Bacanga</h1>
     </header>
-
     <div class="container">
-        <!-- Mesa 1 -->
-        <div class="mesa-card">
+        <div id="mesa1" class="mesa">
             <h2>Mesa 1</h2>
-            <div class="input-group">
-                <label for="item1">Item:</label>
-                <input type="text" id="item1" placeholder="Digite o item">
-            </div>
-            <div class="input-group">
-                <label for="valor1">Valor:</label>
-                <input type="number" id="valor1" placeholder="Digite o valor">
-            </div>
-            <div class="input-group">
-                <label for="quantidade1">Qtd:</label>
-                <input type="number" id="quantidade1" placeholder="Digite a quantidade">
-            </div>
-            <button onclick="adicionarItem(1)">Adicionar</button>
-            <button class="limpar" onclick="limparMesa(1)">Limpar</button>
+            <div id="mesa1-content"></div>
+            <button onclick="adicionar(1)">Adicionar</button>
+            <button onclick="limpar(1)">Limpar</button>
             <div id="qrcode1"></div>
-            <div class="total" id="totalMesa1">Total: R$ 0,00</div>
         </div>
 
-        <!-- Mesa 2 -->
-        <div class="mesa-card">
+        <div id="mesa2" class="mesa">
             <h2>Mesa 2</h2>
-            <div class="input-group">
-                <label for="item2">Item:</label>
-                <input type="text" id="item2" placeholder="Digite o item">
-            </div>
-            <div class="input-group">
-                <label for="valor2">Valor:</label>
-                <input type="number" id="valor2" placeholder="Digite o valor">
-            </div>
-            <div class="input-group">
-                <label for="quantidade2">Qtd:</label>
-                <input type="number" id="quantidade2" placeholder="Digite a quantidade">
-            </div>
-            <button onclick="adicionarItem(2)">Adicionar</button>
-            <button class="limpar" onclick="limparMesa(2)">Limpar</button>
+            <div id="mesa2-content"></div>
+            <button onclick="adicionar(2)">Adicionar</button>
+            <button onclick="limpar(2)">Limpar</button>
             <div id="qrcode2"></div>
-            <div class="total" id="totalMesa2">Total: R$ 0,00</div>
         </div>
 
-        <!-- Mesa 3 -->
-        <div class="mesa-card">
+        <div id="mesa3" class="mesa">
             <h2>Mesa 3</h2>
-            <div class="input-group">
-                <label for="item3">Item:</label>
-                <input type="text" id="item3" placeholder="Digite o item">
-            </div>
-            <div class="input-group">
-                <label for="valor3">Valor:</label>
-                <input type="number" id="valor3" placeholder="Digite o valor">
-            </div>
-            <div class="input-group">
-                <label for="quantidade3">Qtd:</label>
-                <input type="number" id="quantidade3" placeholder="Digite a quantidade">
-            </div>
-            <button onclick="adicionarItem(3)">Adicionar</button>
-            <button class="limpar" onclick="limparMesa(3)">Limpar</button>
+            <div id="mesa3-content"></div>
+            <button onclick="adicionar(3)">Adicionar</button>
+            <button onclick="limpar(3)">Limpar</button>
             <div id="qrcode3"></div>
-            <div class="total" id="totalMesa3">Total: R$ 0,00</div>
         </div>
 
-        <!-- Mesa 4 -->
-        <div class="mesa-card">
+        <div id="mesa4" class="mesa">
             <h2>Mesa 4</h2>
-            <div class="input-group">
-                <label for="item4">Item:</label>
-                <input type="text" id="item4" placeholder="Digite o item">
-            </div>
-            <div class="input-group">
-                <label for="valor4">Valor:</label>
-                <input type="number" id="valor4" placeholder="Digite o valor">
-            </div>
-            <div class="input-group">
-                <label for="quantidade4">Qtd:</label>
-                <input type="number" id="quantidade4" placeholder="Digite a quantidade">
-            </div>
-            <button onclick="adicionarItem(4)">Adicionar</button>
-            <button class="limpar" onclick="limparMesa(4)">Limpar</button>
+            <div id="mesa4-content"></div>
+            <button onclick="adicionar(4)">Adicionar</button>
+            <button onclick="limpar(4)">Limpar</button>
             <div id="qrcode4"></div>
-            <div class="total" id="totalMesa4">Total: R$ 0,00</div>
         </div>
     </div>
 
