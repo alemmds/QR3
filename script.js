@@ -11,7 +11,7 @@ function adicionarPedido(mesa) {
         localStorage.setItem(`pedidosMesa${mesa}`, JSON.stringify(pedidos));
 
         atualizarResumo(mesa);
-        gerarQRCode(mesa);
+        gerarQRCode(mesa); // Garantindo que o QR code seja gerado após adicionar um pedido
     } else {
         alert("Preencha todos os campos corretamente.");
     }
@@ -48,16 +48,20 @@ function atualizarResumo(mesa) {
 }
 
 // Função para gerar o QR Code
-function gerarQRCode(mesa, total) {
+function gerarQRCode(mesa) {
     const qrcodeContainer = document.getElementById(`qrcode${mesa}`);
     qrcodeContainer.innerHTML = ''; // Limpa o QR Code anterior
 
-    if (total > 0) {
-        const qrcode = new QRCode(qrcodeContainer, {
-            text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
-            width: 128,
-            height: 128
-        });
+    const pedidos = JSON.parse(localStorage.getItem(`pedidosMesa${mesa}`)) || [];
+    if (pedidos.length > 0) {
+        const total = pedidos.reduce((acc, pedido) => acc + (pedido.valor * pedido.quantidade), 0);
+        if (total > 0) {
+            const qrcode = new QRCode(qrcodeContainer, {
+                text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
+                width: 128,
+                height: 128
+            });
+        }
     }
 }
 
