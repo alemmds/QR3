@@ -40,15 +40,20 @@ function atualizarResumo(mesa) {
         resumoHTML = '<p>Nenhum pedido registrado.</p>';
     }
 
-    document.getElementById(`qrcode${mesa}`).innerHTML = resumoHTML;
+    document.getElementById(`pedidos${mesa}`).innerHTML = resumoHTML;
+    document.getElementById(`total${mesa}`).innerHTML = `Total: R$${total.toFixed(2)}`;
+
+    // Atualiza o QR Code se houver total
+    gerarQRCode(mesa, total);
 }
 
 // Função para gerar o QR Code
-function gerarQRCode(mesa) {
-    const total = JSON.parse(localStorage.getItem(`pedidosMesa${mesa}`))?.reduce((acc, pedido) => acc + (pedido.valor * pedido.quantidade), 0) || 0;
+function gerarQRCode(mesa, total) {
+    const qrcodeContainer = document.getElementById(`qrcode${mesa}`);
+    qrcodeContainer.innerHTML = ''; // Limpa o QR Code anterior
 
     if (total > 0) {
-        const qrcode = new QRCode(document.getElementById(`qrcode${mesa}`), {
+        const qrcode = new QRCode(qrcodeContainer, {
             text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
             width: 128,
             height: 128
@@ -56,9 +61,14 @@ function gerarQRCode(mesa) {
     }
 }
 
+// Função para voltar para a página principal
+function voltar() {
+    window.history.back();
+}
+
 // Atualiza os resumos ao carregar a página
 window.onload = function() {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 4; i++) {
         atualizarResumo(i);
     }
 };
