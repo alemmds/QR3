@@ -9,13 +9,13 @@ function carregarMesa(mesa) {
     return conteudo ? JSON.parse(conteudo) : [];
 }
 
-// Função para adicionar itens à mesa
+// Função para adicionar itens à mesa a partir dos campos de formulário
 function adicionar(mesa) {
-    let item = prompt("Nome do item:");
-    let valor = parseFloat(prompt("Valor do item:"));
-    let quantidade = parseInt(prompt("Quantidade:"));
+    let item = document.getElementById(`item-nome${mesa}`).value;
+    let valor = parseFloat(document.getElementById(`item-valor${mesa}`).value);
+    let quantidade = parseInt(document.getElementById(`item-quantidade${mesa}`).value);
 
-    if (!isNaN(valor) && !isNaN(quantidade)) {
+    if (!isNaN(valor) && !isNaN(quantidade) && item.trim() !== "") {
         let total = valor * quantidade;
         let conteudoMesa = carregarMesa(mesa);
         conteudoMesa.push({ item, valor, quantidade, total });
@@ -23,9 +23,17 @@ function adicionar(mesa) {
         salvarMesa(mesa, conteudoMesa);
         exibirPedidos(mesa);
         gerarQRCode(mesa);
+        limparCampos(mesa);
     } else {
-        alert("Por favor, insira valores válidos.");
+        alert("Por favor, preencha todos os campos corretamente.");
     }
+}
+
+// Função para limpar os campos de formulário após adicionar
+function limparCampos(mesa) {
+    document.getElementById(`item-nome${mesa}`).value = '';
+    document.getElementById(`item-valor${mesa}`).value = '';
+    document.getElementById(`item-quantidade${mesa}`).value = '';
 }
 
 // Função para exibir os pedidos na mesa
@@ -58,7 +66,11 @@ function gerarQRCode(mesa) {
     if (conteudoMesa.length > 0) {
         let qrcodeDiv = document.getElementById(`qrcode${mesa}`);
         qrcodeDiv.innerHTML = '';
-        new QRCode(qrcodeDiv, `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`);
+        new QRCode(qrcodeDiv, {
+            text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
+            width: 128, 
+            height: 128
+        });
     } else {
         alert("Adicione pelo menos um item antes de gerar o QR code.");
     }
