@@ -40,8 +40,8 @@ function atualizarResumo(mesa) {
         resumoHTML = '<p>Nenhum pedido registrado.</p>';
     }
 
-    document.getElementById(`pedidos${mesa}`).innerHTML = resumoHTML;
-    document.getElementById(`total${mesa}`).innerHTML = `Total: R$${total.toFixed(2)}`;
+    document.getElementById(`pedidos`).innerHTML = resumoHTML;
+    document.getElementById(`total`).innerHTML = `Total: R$${total.toFixed(2)}`;
 
     // Atualiza o QR Code se houver total
     gerarQRCode(mesa, total);
@@ -66,9 +66,14 @@ function voltar() {
     window.history.back();
 }
 
-// Atualiza os resumos ao carregar a página
-window.onload = function() {
-    for (let i = 1; i <= 4; i++) {
-        atualizarResumo(i);
+// Função para mostrar a mesa referenciada pelo QR code
+function mostrarMesa() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mesa = urlParams.get('mesa');
+    if (mesa) {
+        atualizarResumo(mesa);
     }
-};
+}
+
+// Atualiza os resumos ao carregar a página
+window.onload = mostrarMesa;
