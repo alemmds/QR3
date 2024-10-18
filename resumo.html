@@ -1,49 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo dos Pedidos</title>
+    <title>Resumo das Mesas</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Resumo dos Pedidos - Mesa <span id="mesaId"></span></h1>
-    <div id="resumo-container">
-        <p>Nenhum pedido registrado.</p>
-    </div>
-    <button onclick="voltar()">Voltar</button>
-
-    <script>
-        function carregarResumo() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const mesa = urlParams.get('mesa');
-            document.getElementById('mesaId').innerText = mesa;
-
-            const pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`));
-            const container = document.getElementById('resumo-container');
-            container.innerHTML = '';
-
-            if (pedidos && pedidos.length > 0) {
-                let total = 0;
-                pedidos.forEach(pedido => {
-                    const div = document.createElement('div');
-                    div.innerHTML = `<p>${pedido.item} - ${pedido.quantidade}x - R$${pedido.valor.toFixed(2)} (Total: R$${pedido.total.toFixed(2)})</p>`;
-                    container.appendChild(div);
-                    total += pedido.total;
-                });
-                const totalDiv = document.createElement('div');
-                totalDiv.innerHTML = `<h2>Total: R$${total.toFixed(2)}</h2>`;
-                container.appendChild(totalDiv);
-            } else {
-                container.innerHTML = '<p>Nenhum pedido registrado.</p>';
-            }
-        }
-
-        function voltar() {
-            window.location.href = 'index.html';
-        }
-
-        carregarResumo();
-    </script>
+    <header>
+        <h1>Resumo das Mesas</h1>
+    </header>
+    <main>
+        <div id="resumos-container">
+            <div class="resumo" id="resumo1">
+                <h2>Mesa 1</h2>
+                <div class="pedidos" id="pedidos1"></div>
+                <div class="total" id="total1"></div>
+            </div>
+            <div class="resumo" id="resumo2">
+                <h2>Mesa 2</h2>
+                <div class="pedidos" id="pedidos2"></div>
+                <div class="total" id="total2"></div>
+            </div>
+            <div class="resumo" id="resumo3">
+                <h2>Mesa 3</h2>
+                <div class="pedidos" id="pedidos3"></div>
+                <div class="total" id="total3"></div>
+            </div>
+            <div class="resumo" id="resumo4">
+                <h2>Mesa 4</h2>
+                <div class="pedidos" id="pedidos4"></div>
+                <div class="total" id="total4"></div>
+            </div>
+        </div>
+        <button onclick="voltar()">Voltar</button>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
