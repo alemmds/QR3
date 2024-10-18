@@ -1,36 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo dos Pedidos</title>
+    <title>Resumo de Pedidos</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <h1>Resumo da Mesa</h1>
-    <div id="resumoPedidos"></div>
-    <button onclick="voltar()">Voltar</button>
 
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const mesa = urlParams.get('mesa');
+    <header class="navbar">
+        <h1>Resumo da Mesa</h1>
+    </header>
 
-        const pedido = JSON.parse(localStorage.getItem(`pedido_mesa${mesa}`));
+    <div id="resumoPedidos" class="container">
+        <h2 id="mesaResumo">Mesa X</h2>
+        <div id="itensResumo">
+            <p>Nenhum pedido registrado.</p>
+        </div>
+        <div class="total" id="totalResumo">Total: R$ 0,00</div>
+        <button id="voltarBtn" onclick="voltarPagina()">Voltar</button>
+    </div>
 
-        if (pedido) {
-            document.getElementById('resumoPedidos').innerHTML = `
-                <p>Nome: ${pedido.nome}</p>
-                <p>Valor: R$${pedido.valor.toFixed(2)}</p>
-                <p>Quantidade: ${pedido.quantidade}</p>
-                <p>Total: R$${pedido.total.toFixed(2)}</p>
-            `;
-        } else {
-            document.getElementById('resumoPedidos').innerHTML = '<p>Nenhum pedido registrado.</p>';
-        }
-
-        function voltar() {
-            window.location.href = "index.html";
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
