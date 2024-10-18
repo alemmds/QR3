@@ -29,11 +29,14 @@ function limparMesa(mesa) {
     alert(`Pedidos da Mesa ${mesa} foram limpos.`);
 }
 
-// Função para gerar o QR code
+// Função para gerar o QR code e exibir o valor total
 function gerarQRCode(mesa) {
     const pedido = JSON.parse(localStorage.getItem(`pedido_mesa${mesa}`));
     
     if (pedido && pedido.total > 0) {
+        // Exibe o valor total acima do QR code
+        document.getElementById(`total${mesa}`).innerText = `Valor Total: R$${pedido.total.toFixed(2)}`;
+
         const qrcodeDiv = document.getElementById(`qrcode${mesa}`);
         qrcodeDiv.innerHTML = ''; // Limpa o QR code anterior para gerar um novo
 
@@ -73,10 +76,20 @@ function voltar() {
     window.location.href = "index.html";
 }
 
-// Função para inicializar o manifest.json para web app
+// Registro do Service Worker para transformar o site em um web app
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/service-worker.js')
     .then(function() {
         console.log('Service Worker Registered');
     });
 }
+
+// Função de inicialização do manifest.json para o PWA
+function carregarManifest() {
+    const manifestLink = document.createElement('link');
+    manifestLink.rel = 'manifest';
+    manifestLink.href = '/manifest.json';
+    document.head.appendChild(manifestLink);
+}
+
+carregarManifest();
