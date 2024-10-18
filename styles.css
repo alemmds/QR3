@@ -1,79 +1,64 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f4;
+    text-align: center;
 }
 
-.navbar {
-    background-color: #3b5998;
+header {
+    background-color: #4CAF50;
     color: white;
-    padding: 15px;
-    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin: 0;
 }
 
 .container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
 
-.mesa-card {
-    background-color: white;
-    border-radius: 10px;
+.mesa {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 90%;
-}
-
-.mesa-card h2 {
-    margin: 0;
-    color: #3b5998;
-}
-
-.input-group {
-    margin-bottom: 10px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 200px;
+    text-align: left;
 }
 
 button {
-    background-color: #3b5998;
+    background-color: #4CAF50;
     color: white;
-    padding: 10px;
     border: none;
-    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
     width: 100%;
+    border-radius: 4px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #2a3b7c;
-}
-
-.limpar {
-    background-color: #f44336;
-}
-
-.total {
-    margin-top: 15px;
-    font-size: 1.2em;
-    color: #3b5998;
+    background-color: #45a049;
 }
 
 #qrcode1, #qrcode2, #qrcode3, #qrcode4 {
-    margin-top: 15px;
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mesa {
+        width: 100%;
+    }
 }
