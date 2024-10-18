@@ -6,47 +6,64 @@
     <meta name="theme-color" content="#000000"/>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-    <title>Mesas da Lanchonete Bacanga</title>
+    <title>Cadastro de Mesas - Lanchonete Bacanga</title>
 </head>
 <body>
     <header>
-        <h1>Mesas da Lanchonete Bacanga</h1>
+        <h1>Cadastro de Mesas</h1>
     </header>
+
     <div class="container">
-        <div id="mesa1" class="mesa">
+        <!-- Mesa 1 -->
+        <div class="mesa">
             <h2>Mesa 1</h2>
-            <div id="mesa1-content"></div>
+            <input type="text" id="item-nome1" placeholder="Nome do item">
+            <input type="number" id="item-valor1" placeholder="Valor do item">
+            <input type="number" id="item-quantidade1" placeholder="Quantidade">
             <button onclick="adicionar(1)">Adicionar</button>
             <button onclick="limpar(1)">Limpar</button>
+            <div id="mesa1-content"></div>
             <div id="qrcode1"></div>
         </div>
 
-        <div id="mesa2" class="mesa">
+        <!-- Mesa 2 -->
+        <div class="mesa">
             <h2>Mesa 2</h2>
-            <div id="mesa2-content"></div>
+            <input type="text" id="item-nome2" placeholder="Nome do item">
+            <input type="number" id="item-valor2" placeholder="Valor do item">
+            <input type="number" id="item-quantidade2" placeholder="Quantidade">
             <button onclick="adicionar(2)">Adicionar</button>
             <button onclick="limpar(2)">Limpar</button>
+            <div id="mesa2-content"></div>
             <div id="qrcode2"></div>
         </div>
 
-        <div id="mesa3" class="mesa">
+        <!-- Mesa 3 -->
+        <div class="mesa">
             <h2>Mesa 3</h2>
-            <div id="mesa3-content"></div>
+            <input type="text" id="item-nome3" placeholder="Nome do item">
+            <input type="number" id="item-valor3" placeholder="Valor do item">
+            <input type="number" id="item-quantidade3" placeholder="Quantidade">
             <button onclick="adicionar(3)">Adicionar</button>
             <button onclick="limpar(3)">Limpar</button>
+            <div id="mesa3-content"></div>
             <div id="qrcode3"></div>
         </div>
 
-        <div id="mesa4" class="mesa">
+        <!-- Mesa 4 -->
+        <div class="mesa">
             <h2>Mesa 4</h2>
-            <div id="mesa4-content"></div>
+            <input type="text" id="item-nome4" placeholder="Nome do item">
+            <input type="number" id="item-valor4" placeholder="Valor do item">
+            <input type="number" id="item-quantidade4" placeholder="Quantidade">
             <button onclick="adicionar(4)">Adicionar</button>
             <button onclick="limpar(4)">Limpar</button>
+            <div id="mesa4-content"></div>
             <div id="qrcode4"></div>
         </div>
     </div>
 
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
