@@ -1,27 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo de Pedidos</title>
+    <meta name="theme-color" content="#000000"/>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
+    <title>Resumo da Mesa</title>
 </head>
 <body>
-
-    <header class="navbar">
+    <header>
         <h1>Resumo da Mesa</h1>
     </header>
-
-    <div id="resumoPedidos" class="container">
-        <h2 id="mesaResumo">Mesa X</h2>
-        <div id="itensResumo">
-            <p>Nenhum pedido registrado.</p>
-        </div>
-        <div class="total" id="totalResumo">Total: R$ 0,00</div>
-        <button id="voltarBtn" onclick="voltarPagina()">Voltar</button>
+    <div class="container">
+        <div id="resumo-content"></div>
+        <button onclick="voltar()">Voltar</button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Função para carregar o resumo da mesa
+        function carregarResumo() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const mesa = urlParams.get('mesa');
+            const conteudoMesa = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
+
+            let conteudo = document.getElementById('resumo-content');
+            let totalGeral = 0;
+
+            if (conteudoMesa.length > 0) {
+                conteudoMesa.forEach(pedido => {
+                    totalGeral += pedido.total;
+                    conteudo.innerHTML += `<p>${pedido.item} - R$${pedido.total.toFixed(2)} (${pedido.quantidade})</p>`;
+                });
+
+                conteudo.innerHTML += `<p><strong>Total: R$${totalGeral.toFixed(2)}</strong></p>`;
+            } else {
+                conteudo.innerHTML = "<p>Nenhum pedido registrado</p>";
+            }
+        }
+
+        // Função para voltar à página anterior
+        function voltar() {
+            window.history.back();
+        }
+
+        window.onload = carregarResumo;
+    </script>
 </body>
 </html>
