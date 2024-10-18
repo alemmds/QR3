@@ -1,66 +1,49 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    padding: 20px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
 }
 
 h1 {
-    text-align: center;
     color: #0066cc;
 }
 
+#mesas {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 20px;
+}
+
 .mesa {
-    background-color: #ffffff;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.mesa h2 {
-    color: #28a745;
-}
-
-.mesa label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 22%;
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 .mesa input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
+    width: 90%;
+    margin-bottom: 10px;
+    padding: 5px;
 }
 
-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
+.mesa button {
+    width: 45%;
+    padding: 10px;
+    margin: 5px;
+    background-color: #0066cc;
+    color: #fff;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
-    margin-right: 10px;
 }
 
-button:hover {
-    background-color: #0056b3;
-}
-
-#total1, #total2, #total3, #total4 {
-    margin-top: 10px;
-    font-weight: bold;
-    color: #333;
+.mesa button:hover {
+    background-color: #004d99;
 }
 
 #qrcode1, #qrcode2, #qrcode3, #qrcode4 {
-    margin-top: 15px;
+    margin-top: 10px;
 }
