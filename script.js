@@ -48,3 +48,27 @@ function gerarQRCode(mesaId) {
         new QRCode(qrcodeDiv, `https://alemmds.github.io/QR3/resumo.html?mesa=${mesaId}`);
     }
 }
+
+// Carregar dados do LocalStorage ao carregar a página
+window.onload = function() {
+    for (let i = 1; i <= 4; i++) {
+        let mesaData = localStorage.getItem(`mesa${i}`);
+        if (mesaData) {
+            mesas[`mesa${i}`] = JSON.parse(mesaData);
+            atualizarTotal(i);
+            gerarQRCode(i);
+        }
+    }
+}
+
+// Armazenar os dados no LocalStorage sempre que houver uma atualização
+function salvarDados() {
+    for (let i = 1; i <= 4; i++) {
+        localStorage.setItem(`mesa${i}`, JSON.stringify(mesas[`mesa${i}`]));
+    }
+}
+
+// Adicionar escuta de evento para armazenar os dados sempre que houver uma atualização
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', salvarDados);
+});
