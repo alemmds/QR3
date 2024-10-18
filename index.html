@@ -5,57 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesas da Lanchonete Bacanga</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script> <!-- Adicionado aqui -->
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
 <body>
-    <h1>Mesas da Lanchonete Bacanga</h1>
-    <div id="mesas-container">
-        <div class="mesa" id="mesa1">
-            <h2>Mesa 1</h2>
-            <input type="text" placeholder="Nome do item" id="item1">
-            <input type="number" placeholder="Valor" id="valor1">
-            <input type="number" placeholder="Quantidade" id="quantidade1">
-            <button onclick="adicionarPedido(1)">Adicionar</button>
-            <button onclick="limparMesa(1)">Limpar</button>
-            <div class="qr-code" id="qrcode1"></div>
+    <header>
+        <h1>Mesas da Lanchonete Bacanga</h1>
+    </header>
+    <main>
+        <div id="mesas-container">
+            <div class="mesa" id="mesa1">
+                <h2>Mesa 1</h2>
+                <div class="inputs">
+                    <input type="text" placeholder="Nome do item" id="item1">
+                    <input type="number" placeholder="Valor" id="valor1">
+                    <input type="number" placeholder="Quantidade" id="quantidade1">
+                </div>
+                <div class="buttons">
+                    <button onclick="adicionarPedido(1)">Adicionar</button>
+                    <button onclick="limparMesa(1)">Limpar</button>
+                </div>
+                <div class="qr-code" id="qrcode1"></div>
+            </div>
+            <div class="mesa" id="mesa2">
+                <h2>Mesa 2</h2>
+                <div class="inputs">
+                    <input type="text" placeholder="Nome do item" id="item2">
+                    <input type="number" placeholder="Valor" id="valor2">
+                    <input type="number" placeholder="Quantidade" id="quantidade2">
+                </div>
+                <div class="buttons">
+                    <button onclick="adicionarPedido(2)">Adicionar</button>
+                    <button onclick="limparMesa(2)">Limpar</button>
+                </div>
+                <div class="qr-code" id="qrcode2"></div>
+            </div>
+            <div class="mesa" id="mesa3">
+                <h2>Mesa 3</h2>
+                <div class="inputs">
+                    <input type="text" placeholder="Nome do item" id="item3">
+                    <input type="number" placeholder="Valor" id="valor3">
+                    <input type="number" placeholder="Quantidade" id="quantidade3">
+                </div>
+                <div class="buttons">
+                    <button onclick="adicionarPedido(3)">Adicionar</button>
+                    <button onclick="limparMesa(3)">Limpar</button>
+                </div>
+                <div class="qr-code" id="qrcode3"></div>
+            </div>
+            <div class="mesa" id="mesa4">
+                <h2>Mesa 4</h2>
+                <div class="inputs">
+                    <input type="text" placeholder="Nome do item" id="item4">
+                    <input type="number" placeholder="Valor" id="valor4">
+                    <input type="number" placeholder="Quantidade" id="quantidade4">
+                </div>
+                <div class="buttons">
+                    <button onclick="adicionarPedido(4)">Adicionar</button>
+                    <button onclick="limparMesa(4)">Limpar</button>
+                </div>
+                <div class="qr-code" id="qrcode4"></div>
+            </div>
+            <div class="mesa" id="mesa5">
+                <h2>Mesa 5</h2>
+                <div class="inputs">
+                    <input type="text" placeholder="Nome do item" id="item5">
+                    <input type="number" placeholder="Valor" id="valor5">
+                    <input type="number" placeholder="Quantidade" id="quantidade5">
+                </div>
+                <div class="buttons">
+                    <button onclick="adicionarPedido(5)">Adicionar</button>
+                    <button onclick="limparMesa(5)">Limpar</button>
+                </div>
+                <div class="qr-code" id="qrcode5"></div>
+            </div>
         </div>
-        <div class="mesa" id="mesa2">
-            <h2>Mesa 2</h2>
-            <input type="text" placeholder="Nome do item" id="item2">
-            <input type="number" placeholder="Valor" id="valor2">
-            <input type="number" placeholder="Quantidade" id="quantidade2">
-            <button onclick="adicionarPedido(2)">Adicionar</button>
-            <button onclick="limparMesa(2)">Limpar</button>
-            <div class="qr-code" id="qrcode2"></div>
-        </div>
-        <div class="mesa" id="mesa3">
-            <h2>Mesa 3</h2>
-            <input type="text" placeholder="Nome do item" id="item3">
-            <input type="number" placeholder="Valor" id="valor3">
-            <input type="number" placeholder="Quantidade" id="quantidade3">
-            <button onclick="adicionarPedido(3)">Adicionar</button>
-            <button onclick="limparMesa(3)">Limpar</button>
-            <div class="qr-code" id="qrcode3"></div>
-        </div>
-        <div class="mesa" id="mesa4">
-            <h2>Mesa 4</h2>
-            <input type="text" placeholder="Nome do item" id="item4">
-            <input type="number" placeholder="Valor" id="valor4">
-            <input type="number" placeholder="Quantidade" id="quantidade4">
-            <button onclick="adicionarPedido(4)">Adicionar</button>
-            <button onclick="limparMesa(4)">Limpar</button>
-            <div class="qr-code" id="qrcode4"></div>
-        </div>
-        <div class="mesa" id="mesa5">
-            <h2>Mesa 5</h2>
-            <input type="text" placeholder="Nome do item" id="item5">
-            <input type="number" placeholder="Valor" id="valor5">
-            <input type="number" placeholder="Quantidade" id="quantidade5">
-            <button onclick="adicionarPedido(5)">Adicionar</button>
-            <button onclick="limparMesa(5)">Limpar</button>
-            <div class="qr-code" id="qrcode5"></div>
-        </div>
-    </div>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
