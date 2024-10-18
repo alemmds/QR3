@@ -1,95 +1,75 @@
-// Função para adicionar um pedido à mesa
-function adicionarPedido(mesa) {
-    const nome = document.getElementById(`nome${mesa}`).value;
-    const valor = parseFloat(document.getElementById(`valor${mesa}`).value);
-    const quantidade = parseInt(document.getElementById(`quantidade${mesa}`).value);
+function adicionarItem(mesa) {
+    let item = document.getElementById(`item${mesa}`).value;
+    let valor = parseFloat(document.getElementById(`valor${mesa}`).value);
+    let quantidade = parseInt(document.getElementById(`quantidade${mesa}`).value);
     
-    if (nome && valor > 0 && quantidade > 0) {
-        const total = valor * quantidade;
-
-        // Armazenar o pedido no localStorage
-        const pedido = { nome, valor, quantidade, total };
-        localStorage.setItem(`pedido_mesa${mesa}`, JSON.stringify(pedido));
-
-        // Gera o QR code se houver pelo menos 1 item na mesa
-        gerarQRCode(mesa);
-    } else {
-        alert("Preencha todos os campos corretamente.");
+    if (!item || isNaN(valor) || isNaN(quantidade)) {
+        alert('Preencha todos os campos corretamente.');
+        return;
     }
-}
 
-// Função para limpar os pedidos da mesa
-function limparMesa(mesa) {
-    // Remove o pedido do localStorage
-    localStorage.removeItem(`pedido_mesa${mesa}`);
+    // Recupera ou inicializa os pedidos da mesa
+    let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
+    let pedido = { item, valor, quantidade };
+    pedidos.push(pedido);
+    localStorage.setItem(`mesa${mesa}`, JSON.stringify(pedidos));
 
-    // Limpa a visualização do QR code
-    document.getElementById(`qrcode${mesa}`).innerHTML = '';
+    // Atualiza o total da mesa
+    let totalElement = document.getElementById(`totalMesa${mesa}`);
+    let currentTotal = parseFloat(totalElement.innerText.replace('Total: R$', '').replace(',', '.')) || 0;
+    let newTotal = currentTotal + (valor * quantidade);
+    totalElement.innerText = `Total: R$ ${newTotal.toFixed(2).replace('.', ',')}`;
 
-    alert(`Pedidos da Mesa ${mesa} foram limpos.`);
-}
-
-// Função para gerar o QR code e exibir o valor total
-function gerarQRCode(mesa) {
-    const pedido = JSON.parse(localStorage.getItem(`pedido_mesa${mesa}`));
-    
-    if (pedido && pedido.total > 0) {
-        // Exibe o valor total acima do QR code
-        document.getElementById(`total${mesa}`).innerText = `Valor Total: R$${pedido.total.toFixed(2)}`;
-
-        const qrcodeDiv = document.getElementById(`qrcode${mesa}`);
-        qrcodeDiv.innerHTML = ''; // Limpa o QR code anterior para gerar um novo
-
-        const qrcode = new QRCode(qrcodeDiv, {
+    // Gera QR Code
+    if (newTotal > 0) {
+        let qrcodeDiv = document.getElementById(`qrcode${mesa}`);
+        qrcodeDiv.innerHTML = ""; // Limpa o QR code anterior
+        let qr = new QRCode(qrcodeDiv, {
             text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
             width: 128,
             height: 128
         });
-
-        alert(`QR Code gerado para a Mesa ${mesa}.`);
-    } else {
-        alert("Nenhum pedido encontrado para gerar QR Code.");
     }
 }
 
-// Função para carregar os pedidos no resumo (resumo.html)
-function carregarResumo() {
+function limparMesa(mesa) {
+    document.getElementById(`item${mesa}`).value = "";
+    document.getElementById(`valor${mesa}`).value = "";
+    document.getElementById(`quantidade${mesa}`).value = "";
+    document.getElementById(`totalMesa${mesa}`).innerText = "Total: R$ 0,00";
+    document.getElementById(`qrcode${mesa}`).innerHTML = "";
+    localStorage.removeItem(`mesa${mesa}`);
+}
+
+function carregarResumoMesa(mesa) {
+    let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`));
+    if (!pedidos || pedidos.length === 0) {
+        document.getElementById("resumoPedidos").innerText = "Nenhum pedido registrado";
+        document.getElementById("totalResumo").innerText = "Total: R$ 0,00";
+        return;
+    }
+
+    let resumoHTML = "";
+    let total = 0;
+    pedidos.forEach(pedido => {
+        let subtotal = pedido.valor * pedido.quantidade;
+        total += subtotal;
+        resumoHTML += `<li>${pedido.item} - Qtd: ${pedido.quantidade} - R$ ${pedido.valor.toFixed(2).replace('.', ',')} (Subtotal: R$ ${subtotal.toFixed(2).replace('.', ',')})</li>`;
+    });
+
+    document.getElementById("resumoPedidos").innerHTML = resumoHTML;
+    document.getElementById("totalResumo").innerText = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
+}
+
+function voltarPagina() {
+    window.history.back();
+}
+
+// Carregar o resumo da mesa correspondente ao QR code
+document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const mesa = urlParams.get('mesa');
-
-    const pedido = JSON.parse(localStorage.getItem(`pedido_mesa${mesa}`));
-
-    if (pedido) {
-        document.getElementById('resumoPedidos').innerHTML = `
-            <p><strong>Nome do Item:</strong> ${pedido.nome}</p>
-            <p><strong>Valor:</strong> R$${pedido.valor.toFixed(2)}</p>
-            <p><strong>Quantidade:</strong> ${pedido.quantidade}</p>
-            <p><strong>Total:</strong> R$${pedido.total.toFixed(2)}</p>
-        `;
-    } else {
-        document.getElementById('resumoPedidos').innerHTML = '<p>Nenhum pedido registrado.</p>';
+    if (mesa) {
+        carregarResumoMesa(mesa);
     }
-}
-
-// Função para voltar para a página principal
-function voltar() {
-    window.location.href = "index.html";
-}
-
-// Registro do Service Worker para transformar o site em um web app
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-    .then(function() {
-        console.log('Service Worker Registered');
-    });
-}
-
-// Função de inicialização do manifest.json para o PWA
-function carregarManifest() {
-    const manifestLink = document.createElement('link');
-    manifestLink.rel = 'manifest';
-    manifestLink.href = '/manifest.json';
-    document.head.appendChild(manifestLink);
-}
-
-carregarManifest();
+});
