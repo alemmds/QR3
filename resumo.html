@@ -12,39 +12,46 @@
     <header>
         <h1>Resumo da Mesa</h1>
     </header>
+
     <div class="container">
-        <div id="resumo-content"></div>
-        <button onclick="voltar()">Voltar</button>
+        <div id="mesa-resumo">
+            <h2>Mesa <span id="mesa-numero"></span></h2>
+            <div id="pedido-lista"></div>
+            <div id="total-geral"></div>
+        </div>
     </div>
 
     <script>
-        // Função para carregar o resumo da mesa
-        function carregarResumo() {
+        // Função para carregar os pedidos da mesa específica com base no QR code
+        function carregarResumoMesa() {
             const urlParams = new URLSearchParams(window.location.search);
             const mesa = urlParams.get('mesa');
-            const conteudoMesa = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
 
-            let conteudo = document.getElementById('resumo-content');
-            let totalGeral = 0;
+            if (mesa) {
+                document.getElementById("mesa-numero").textContent = mesa;
+                const pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
 
-            if (conteudoMesa.length > 0) {
-                conteudoMesa.forEach(pedido => {
-                    totalGeral += pedido.total;
-                    conteudo.innerHTML += `<p>${pedido.item} - R$${pedido.total.toFixed(2)} (${pedido.quantidade})</p>`;
-                });
+                if (pedidos.length > 0) {
+                    let totalGeral = 0;
+                    let pedidoLista = document.getElementById("pedido-lista");
+                    pedidoLista.innerHTML = '';
 
-                conteudo.innerHTML += `<p><strong>Total: R$${totalGeral.toFixed(2)}</strong></p>`;
+                    pedidos.forEach(pedido => {
+                        let itemTotal = pedido.valor * pedido.quantidade;
+                        totalGeral += itemTotal;
+                        pedidoLista.innerHTML += `<p>${pedido.item}: R$${pedido.valor.toFixed(2)} x ${pedido.quantidade} = R$${itemTotal.toFixed(2)}</p>`;
+                    });
+
+                    document.getElementById("total-geral").innerHTML = `<strong>Total Geral: R$${totalGeral.toFixed(2)}</strong>`;
+                } else {
+                    document.getElementById("pedido-lista").innerHTML = '<p>Nenhum produto cadastrado.</p>';
+                }
             } else {
-                conteudo.innerHTML = "<p>Nenhum pedido registrado</p>";
+                document.getElementById("pedido-lista").innerHTML = '<p>Mesa não encontrada.</p>';
             }
         }
 
-        // Função para voltar à página anterior
-        function voltar() {
-            window.history.back();
-        }
-
-        window.onload = carregarResumo;
+        window.onload = carregarResumoMesa;
     </script>
 </body>
 </html>
