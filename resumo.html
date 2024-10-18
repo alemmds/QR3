@@ -1,91 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resumo da Mesa</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
-        }
-        h1 {
-            font-size: 24px;
-            text-align: center;
-        }
-        #pedido-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        #pedido-list li {
-            background-color: #eee;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 18px;
-        }
-        .total {
-            font-weight: bold;
-            text-align: right;
-            margin-top: 20px;
-        }
-        .botao {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin: 20px 0;
-            background-color: #007BFF;
-            color: white;
-            text-align: center;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 18px;
-        }
-        .botao:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>Resumo dos Pedidos</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Resumo dos Pedidos</h1>
-    <ul id="pedido-list">
-        <!-- Os pedidos serão carregados aqui -->
-    </ul>
-    <p id="total" class="total">Total: R$0,00</p>
-    <a href="index.html" class="botao">Voltar</a>
+    <h1>Resumo dos Pedidos - Mesa <span id="mesaId"></span></h1>
+    <div id="resumo-container">
+        <p>Nenhum pedido registrado.</p>
+    </div>
+    <button onclick="voltar()">Voltar</button>
+
     <script>
-        // Função para carregar o resumo da mesa
-        window.onload = function() {
+        function carregarResumo() {
             const urlParams = new URLSearchParams(window.location.search);
             const mesa = urlParams.get('mesa');
-            if (mesa) {
-                carregarResumo(mesa);
+            document.getElementById('mesaId').innerText = mesa;
+
+            const pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`));
+            const container = document.getElementById('resumo-container');
+            container.innerHTML = '';
+
+            if (pedidos && pedidos.length > 0) {
+                let total = 0;
+                pedidos.forEach(pedido => {
+                    const div = document.createElement('div');
+                    div.innerHTML = `<p>${pedido.item} - ${pedido.quantidade}x - R$${pedido.valor.toFixed(2)} (Total: R$${pedido.total.toFixed(2)})</p>`;
+                    container.appendChild(div);
+                    total += pedido.total;
+                });
+                const totalDiv = document.createElement('div');
+                totalDiv.innerHTML = `<h2>Total: R$${total.toFixed(2)}</h2>`;
+                container.appendChild(totalDiv);
             } else {
-                document.getElementById('pedido-list').innerHTML = '<li>Nenhum pedido registrado</li>';
+                container.innerHTML = '<p>Nenhum pedido registrado.</p>';
             }
-        };
-
-        // Função que carrega os pedidos do Local Storage e exibe na página
-        function carregarResumo(mesa) {
-            let pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
-            if (pedidos.length === 0) {
-                document.getElementById('pedido-list').innerHTML = '<li>Nenhum pedido registrado</li>';
-                document.getElementById('total').innerText = 'Total: R$0,00';
-                return;
-            }
-
-            let lista = document.getElementById('pedido-list');
-            let total = 0;
-            pedidos.forEach(pedido => {
-                let item = document.createElement('li');
-                item.innerText = `${pedido.nome} - R$${pedido.valor.toFixed(2)} x ${pedido.quantidade}`;
-                lista.appendChild(item);
-                total += pedido.valor * pedido.quantidade;
-            });
-
-            document.getElementById('total').innerText = `Total: R$${total.toFixed(2)}`;
         }
+
+        function voltar() {
+            window.location.href = 'index.html';
+        }
+
+        carregarResumo();
     </script>
 </body>
 </html>
