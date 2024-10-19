@@ -1,16 +1,21 @@
 {
-  "name": "Lanchonete Bacanga",
-  "short_name": "Bacanga",
-  "description": "App para gerenciamento de pedidos das mesas da Lanchonete Bacanga",
-  "start_url": "index.html",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4CAF50",
-  "icons": [
-    {
-      "src": "icon.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ]
+    "name": "Panificadora Bacanga",
+    "short_name": "Bacanga",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#795548",
+    "description": "Aplicativo Web para a Panificadora Bacanga - Gerenciamento de Pedidos",
+    "icons": [
+        {
+            "src": "/images/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
 }
