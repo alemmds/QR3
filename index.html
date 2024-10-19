@@ -3,55 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#000000"/>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
-    <title>Resumo da Mesa</title>
+    <title>Panificadora Bacanga</title>
 </head>
 <body>
     <header>
-        <h1>Resumo da Mesa</h1>
+        <h1>Panificadora Bacanga</h1>
     </header>
 
     <div class="container">
-        <div id="mesa-resumo">
-            <h2>Mesa <span id="mesa-numero"></span></h2>
-            <div id="pedido-lista"></div>
-            <div id="total-geral"></div>
-        </div>
+        <section id="selecionar-mesa">
+            <h2>Selecione a Mesa</h2>
+            <div id="mesas">
+                <button onclick="selecionarMesa('mesa1')">Mesa 1</button>
+                <button onclick="selecionarMesa('mesa2')">Mesa 2</button>
+                <button onclick="selecionarMesa('mesa3')">Mesa 3</button>
+                <button onclick="selecionarMesa('mesa4')">Mesa 4</button>
+            </div>
+        </section>
+
+        <section id="form-cadastro" style="display:none;">
+            <h2>Cadastro de Lanches para <span id="mesa-selecionada"></span></h2>
+            <form onsubmit="adicionarPedido(); return false;">
+                <label for="nome-lanche">Nome do Lanche:</label>
+                <input type="text" id="nome-lanche" required>
+
+                <label for="valor-lanche">Valor:</label>
+                <input type="number" id="valor-lanche" step="0.01" required>
+
+                <button type="submit">Confirmar</button>
+            </form>
+        </section>
+
+        <section id="pedidos-mesas">
+            <h2>Pedidos por Mesa</h2>
+            <div id="pedidos-mesa1"><h3>Mesa 1</h3></div>
+            <div id="pedidos-mesa2"><h3>Mesa 2</h3></div>
+            <div id="pedidos-mesa3"><h3>Mesa 3</h3></div>
+            <div id="pedidos-mesa4"><h3>Mesa 4</h3></div>
+        </section>
     </div>
 
-    <script>
-        // Função para carregar os pedidos da mesa específica com base no QR code
-        function carregarResumoMesa() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const mesa = urlParams.get('mesa');
-
-            if (mesa) {
-                document.getElementById("mesa-numero").textContent = mesa;
-                const pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
-
-                if (pedidos.length > 0) {
-                    let totalGeral = 0;
-                    let pedidoLista = document.getElementById("pedido-lista");
-                    pedidoLista.innerHTML = '';
-
-                    pedidos.forEach(pedido => {
-                        let itemTotal = pedido.valor * pedido.quantidade;
-                        totalGeral += itemTotal;
-                        pedidoLista.innerHTML += `<p>${pedido.item}: R$${pedido.valor.toFixed(2)} x ${pedido.quantidade} = R$${itemTotal.toFixed(2)}</p>`;
-                    });
-
-                    document.getElementById("total-geral").innerHTML = `<strong>Total Geral: R$${totalGeral.toFixed(2)}</strong>`;
-                } else {
-                    document.getElementById("pedido-lista").innerHTML = '<p>Nenhum produto cadastrado.</p>';
-                }
-            } else {
-                document.getElementById("pedido-lista").innerHTML = '<p>Mesa não encontrada.</p>';
-            }
-        }
-
-        window.onload = carregarResumoMesa;
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
