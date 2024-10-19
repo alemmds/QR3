@@ -28,15 +28,18 @@ function adicionarPedido() {
         return;
     }
 
+    // Adiciona o novo pedido à lista da mesa selecionada
     pedidosPorMesa[mesaSelecionada].push({
         nome: nomeLanche,
         valor: valorLanche
     });
 
-    exibirPedidosMesa(mesaSelecionada);
-
+    // Limpa os campos de input após adicionar o pedido
     document.getElementById('nome-lanche').value = '';
     document.getElementById('valor-lanche').value = '';
+
+    // Atualiza a lista de pedidos e o QR code
+    exibirPedidosMesa(mesaSelecionada);
 }
 
 function exibirPedidosMesa(mesa) {
