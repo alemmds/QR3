@@ -6,64 +6,52 @@
     <meta name="theme-color" content="#000000"/>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
-    <title>Cadastro de Mesas - Lanchonete Bacanga</title>
+    <title>Resumo da Mesa</title>
 </head>
 <body>
     <header>
-        <h1>Cadastro de Mesas</h1>
+        <h1>Resumo da Mesa</h1>
     </header>
 
     <div class="container">
-        <!-- Mesa 1 -->
-        <div class="mesa">
-            <h2>Mesa 1</h2>
-            <input type="text" id="item-nome1" placeholder="Nome do item">
-            <input type="number" id="item-valor1" placeholder="Valor do item">
-            <input type="number" id="item-quantidade1" placeholder="Quantidade">
-            <button onclick="adicionar(1)">Adicionar</button>
-            <button onclick="limpar(1)">Limpar</button>
-            <div id="mesa1-content"></div>
-            <div id="qrcode1"></div>
-        </div>
-
-        <!-- Mesa 2 -->
-        <div class="mesa">
-            <h2>Mesa 2</h2>
-            <input type="text" id="item-nome2" placeholder="Nome do item">
-            <input type="number" id="item-valor2" placeholder="Valor do item">
-            <input type="number" id="item-quantidade2" placeholder="Quantidade">
-            <button onclick="adicionar(2)">Adicionar</button>
-            <button onclick="limpar(2)">Limpar</button>
-            <div id="mesa2-content"></div>
-            <div id="qrcode2"></div>
-        </div>
-
-        <!-- Mesa 3 -->
-        <div class="mesa">
-            <h2>Mesa 3</h2>
-            <input type="text" id="item-nome3" placeholder="Nome do item">
-            <input type="number" id="item-valor3" placeholder="Valor do item">
-            <input type="number" id="item-quantidade3" placeholder="Quantidade">
-            <button onclick="adicionar(3)">Adicionar</button>
-            <button onclick="limpar(3)">Limpar</button>
-            <div id="mesa3-content"></div>
-            <div id="qrcode3"></div>
-        </div>
-
-        <!-- Mesa 4 -->
-        <div class="mesa">
-            <h2>Mesa 4</h2>
-            <input type="text" id="item-nome4" placeholder="Nome do item">
-            <input type="number" id="item-valor4" placeholder="Valor do item">
-            <input type="number" id="item-quantidade4" placeholder="Quantidade">
-            <button onclick="adicionar(4)">Adicionar</button>
-            <button onclick="limpar(4)">Limpar</button>
-            <div id="mesa4-content"></div>
-            <div id="qrcode4"></div>
+        <div id="mesa-resumo">
+            <h2>Mesa <span id="mesa-numero"></span></h2>
+            <div id="pedido-lista"></div>
+            <div id="total-geral"></div>
         </div>
     </div>
 
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Função para carregar os pedidos da mesa específica com base no QR code
+        function carregarResumoMesa() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const mesa = urlParams.get('mesa');
+
+            if (mesa) {
+                document.getElementById("mesa-numero").textContent = mesa;
+                const pedidos = JSON.parse(localStorage.getItem(`mesa${mesa}`)) || [];
+
+                if (pedidos.length > 0) {
+                    let totalGeral = 0;
+                    let pedidoLista = document.getElementById("pedido-lista");
+                    pedidoLista.innerHTML = '';
+
+                    pedidos.forEach(pedido => {
+                        let itemTotal = pedido.valor * pedido.quantidade;
+                        totalGeral += itemTotal;
+                        pedidoLista.innerHTML += `<p>${pedido.item}: R$${pedido.valor.toFixed(2)} x ${pedido.quantidade} = R$${itemTotal.toFixed(2)}</p>`;
+                    });
+
+                    document.getElementById("total-geral").innerHTML = `<strong>Total Geral: R$${totalGeral.toFixed(2)}</strong>`;
+                } else {
+                    document.getElementById("pedido-lista").innerHTML = '<p>Nenhum produto cadastrado.</p>';
+                }
+            } else {
+                document.getElementById("pedido-lista").innerHTML = '<p>Mesa não encontrada.</p>';
+            }
+        }
+
+        window.onload = carregarResumoMesa;
+    </script>
 </body>
 </html>
