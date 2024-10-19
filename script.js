@@ -1,84 +1,99 @@
-// Função para armazenar pedidos no LocalStorage
-function salvarMesa(mesa, conteudo) {
-    localStorage.setItem(`mesa${mesa}`, JSON.stringify(conteudo));
+// Inicializando variáveis para armazenar os pedidos de cada mesa
+let pedidosMesas = {
+    mesa1: [],
+    mesa2: [],
+    mesa3: [],
+    mesa4: []
+};
+
+let mesaSelecionada = null;
+
+// Função para selecionar uma mesa e exibir o formulário de cadastro
+function selecionarMesa(mesa) {
+    mesaSelecionada = mesa;
+    document.getElementById('mesa-selecionada').textContent = `Mesa ${mesa.replace('mesa', '')}`;
+    document.getElementById('form-cadastro').style.display = 'block'; // Exibir formulário
 }
 
-// Função para recuperar os pedidos do LocalStorage
-function carregarMesa(mesa) {
-    const conteudo = localStorage.getItem(`mesa${mesa}`);
-    return conteudo ? JSON.parse(conteudo) : [];
-}
+// Função para adicionar um pedido à mesa selecionada
+function adicionarPedido() {
+    if (!mesaSelecionada) {
+        alert('Por favor, selecione uma mesa.');
+        return;
+    }
 
-// Função para adicionar itens à mesa a partir dos campos de formulário
-function adicionar(mesa) {
-    let item = document.getElementById(`item-nome${mesa}`).value;
-    let valor = parseFloat(document.getElementById(`item-valor${mesa}`).value);
-    let quantidade = parseInt(document.getElementById(`item-quantidade${mesa}`).value);
+    let nomeLanche = document.getElementById('nome-lanche').value;
+    let valorLanche = parseFloat(document.getElementById('valor-lanche').value);
 
-    if (!isNaN(valor) && !isNaN(quantidade) && item.trim() !== "") {
-        let total = valor * quantidade;
-        let conteudoMesa = carregarMesa(mesa);
-        conteudoMesa.push({ item, valor, quantidade, total });
+    if (nomeLanche && valorLanche) {
+        let novoPedido = {
+            item: nomeLanche,
+            valor: valorLanche,
+            quantidade: 1
+        };
 
-        salvarMesa(mesa, conteudoMesa);
-        exibirPedidos(mesa);
-        gerarQRCode(mesa);
-        limparCampos(mesa);
+        pedidosMesas[mesaSelecionada].push(novoPedido);
+        atualizarPedidos();
+        limparFormulario();
     } else {
-        alert("Por favor, preencha todos os campos corretamente.");
+        alert('Preencha os campos corretamente.');
     }
 }
 
-// Função para limpar os campos de formulário após adicionar
-function limparCampos(mesa) {
-    document.getElementById(`item-nome${mesa}`).value = '';
-    document.getElementById(`item-valor${mesa}`).value = '';
-    document.getElementById(`item-quantidade${mesa}`).value = '';
-}
+// Função para atualizar a exibição dos pedidos por mesa
+function atualizarPedidos() {
+    Object.keys(pedidosMesas).forEach(mesa => {
+        let pedidoLista = document.getElementById(`pedidos-${mesa}`);
+        pedidoLista.innerHTML = '';
 
-// Função para exibir os pedidos na mesa
-function exibirPedidos(mesa) {
-    const conteudoMesa = carregarMesa(mesa);
-    let conteudo = document.getElementById(`mesa${mesa}-content`);
-    conteudo.innerHTML = '';
-
-    let totalGeral = 0;
-
-    conteudoMesa.forEach(pedido => {
-        totalGeral += pedido.total;
-        conteudo.innerHTML += `<p>${pedido.item} - R$${pedido.total.toFixed(2)} (${pedido.quantidade})</p>`;
-    });
-
-    conteudo.innerHTML += `<p><strong>Total: R$${totalGeral.toFixed(2)}</strong></p>`;
-}
-
-// Função para limpar itens da mesa
-function limpar(mesa) {
-    localStorage.removeItem(`mesa${mesa}`);
-    document.getElementById(`mesa${mesa}-content`).innerHTML = '';
-    document.getElementById(`qrcode${mesa}`).innerHTML = '';
-}
-
-// Função para gerar o QR code
-function gerarQRCode(mesa) {
-    const conteudoMesa = carregarMesa(mesa);
-    
-    if (conteudoMesa.length > 0) {
-        let qrcodeDiv = document.getElementById(`qrcode${mesa}`);
-        qrcodeDiv.innerHTML = '';
-        new QRCode(qrcodeDiv, {
-            text: `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa}`,
-            width: 128, 
-            height: 128
+        pedidosMesas[mesa].forEach(pedido => {
+            pedidoLista.innerHTML += `<p>${pedido.item}: R$${pedido.valor.toFixed(2)}</p>`;
         });
+    });
+}
+
+// Função para limpar o formulário de cadastro
+function limparFormulario() {
+    document.getElementById('nome-lanche').value = '';
+    document.getElementById('valor-lanche').value = '';
+}
+
+// Função para carregar os pedidos da mesa na página de resumo
+function carregarResumoMesa() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const mesa = urlParams.get('mesa');
+    if (mesa && pedidosMesas[mesa].length > 0) {
+        let pedidoLista = document.getElementById('pedido-lista');
+        let totalGeral = 0;
+        pedidoLista.innerHTML = '';
+
+        pedidosMesas[mesa].forEach(pedido => {
+            let totalItem = pedido.valor * pedido.quantidade;
+            totalGeral += totalItem;
+            pedidoLista.innerHTML += `<p>${pedido.item}: R$${pedido.valor.toFixed(2)} x ${pedido.quantidade} = R$${totalItem.toFixed(2)}</p>`;
+        });
+
+        document.getElementById('total-geral').innerHTML = `<strong>Total: R$${totalGeral.toFixed(2)}</strong>`;
     } else {
-        alert("Adicione pelo menos um item antes de gerar o QR code.");
+        document.getElementById('pedido-lista').innerHTML = '<p>Nenhum produto cadastrado.</p>';
     }
 }
 
-// Função para carregar pedidos ao abrir a página
-window.onload = function() {
-    [1, 2, 3, 4].forEach(mesa => {
-        exibirPedidos(mesa);
-    });
+// Salvando os pedidos no localStorage (opcional para persistência)
+function salvarPedidos() {
+    localStorage.setItem('pedidosMesas', JSON.stringify(pedidosMesas));
 }
+
+// Carregando os pedidos salvos (opcional para persistência)
+function carregarPedidosSalvos() {
+    let pedidosSalvos = localStorage.getItem('pedidosMesas');
+    if (pedidosSalvos) {
+        pedidosMesas = JSON.parse(pedidosSalvos);
+        atualizarPedidos();
+    }
+}
+
+// Carregar pedidos ao iniciar a página
+window.onload = function() {
+    carregarPedidosSalvos();
+};
