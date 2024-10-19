@@ -1,41 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Panificadora Bacanga - Gerenciamento de Pedidos">
+    <title>Panificadora Bacanga</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
-    <title>Panificadora Bacanga - Pedidos</title>
+    <script src="qrcode.min.js"></script> <!-- Biblioteca de QR Code -->
 </head>
 <body>
     <div class="container">
         <h1>Panificadora Bacanga</h1>
 
-        <div class="mesa-selecao">
-            <h2>Selecione a Mesa</h2>
-            <button onclick="selecionarMesa('mesa1')">Mesa 1</button>
-            <button onclick="selecionarMesa('mesa2')">Mesa 2</button>
-            <button onclick="selecionarMesa('mesa3')">Mesa 3</button>
-            <button onclick="selecionarMesa('mesa4')">Mesa 4</button>
+        <h2>Selecione a Mesa</h2>
+        <div class="mesa-buttons">
+            <button id="mesa1" onclick="selecionarMesa('mesa1')">Mesa 1</button>
+            <button id="mesa2" onclick="selecionarMesa('mesa2')">Mesa 2</button>
+            <button id="mesa3" onclick="selecionarMesa('mesa3')">Mesa 3</button>
+            <button id="mesa4" onclick="selecionarMesa('mesa4')">Mesa 4</button>
         </div>
 
-        <div id="form-cadastro" style="display:none;">
-            <h2 id="mesa-selecionada"></h2>
-            <label for="nome-lanche">Nome do Lanche:</label>
-            <input type="text" id="nome-lanche">
-            <label for="valor-lanche">Valor:</label>
-            <input type="number" id="valor-lanche">
-            <button onclick="adicionarPedido()">Cadastrar</button>
-            <button onclick="limparMesa()">Limpar</button> <!-- Botão Limpar -->
-        </div>
+        <h3 id="mesaSelecionadaTexto">Cadastro de Lanches</h3>
+        <form id="formLanches" onsubmit="adicionarPedido(event)">
+            <label for="nomeLanche">Nome do Lanche:</label>
+            <input type="text" id="nomeLanche" required>
+            <label for="valorLanche">Valor:</label>
+            <input type="number" id="valorLanche" step="0.01" required>
+            <button type="submit">Cadastrar</button>
+        </form>
 
-        <div id="pedidos-lista"></div>
+        <div id="pedidosMesa">
+            <!-- Pedidos serão mostrados aqui -->
+        </div>
 
         <div id="qr-code" style="display:none;">
-            <h2>QR Code para Resumo</h2>
+            <h3>QR Code:</h3>
             <div id="qr-code-imagem"></div>
         </div>
+
+        <button id="limparMesaBtn" onclick="limparMesa()">Limpar Mesa</button>
     </div>
 
     <script src="script.js"></script>
