@@ -40,7 +40,7 @@ function adicionarPedido() {
 }
 
 function exibirPedidosMesa(mesa) {
-    const divPedidos = document.getElementById(`pedidos-${mesa}`);
+    const divPedidos = document.getElementById('pedidos-lista');
     divPedidos.innerHTML = `<h3>Mesa ${mesa.replace('mesa', '')}</h3>`;
 
     let total = 0;
@@ -56,13 +56,14 @@ function exibirPedidosMesa(mesa) {
 }
 
 function gerarQRCode(mesa) {
-    const divPedidos = document.getElementById(`pedidos-${mesa}`);
-    const qrCodeUrl = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa.replace('mesa', '')}`;
-    
-    divPedidos.innerHTML += `
-        <div id="qr-code-${mesa}">
-            <p>Resumo da Mesa ${mesa.replace('mesa', '')}</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?data=${qrCodeUrl}&size=150x150" alt="QR Code da Mesa ${mesa.replace('mesa', '')}">
-        </div>
+    const pedidos = pedidosPorMesa[mesa].map(pedido => `${pedido.nome}: R$${pedido.valor.toFixed(2)}`).join(", ");
+    const qrCodeUrl = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa.replace('mesa', '')}&pedidos=${encodeURIComponent(pedidos)}`;
+    const qrCodeDiv = document.getElementById('qr-code');
+    const qrCodeImgDiv = document.getElementById('qr-code-imagem');
+
+    qrCodeImgDiv.innerHTML = `
+        <img src="https://api.qrserver.com/v1/create-qr-code/?data=${qrCodeUrl}&size=150x150" alt="QR Code da Mesa ${mesa.replace('mesa', '')}">
     `;
+
+    qrCodeDiv.style.display = 'block';
 }
