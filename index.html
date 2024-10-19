@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#795548">
+    <title>Panificadora Bacanga</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
-    <title>Panificadora Bacanga</title>
 </head>
 <body>
     <header>
         <h1>Panificadora Bacanga</h1>
     </header>
 
-    <div class="container">
-        <section id="selecionar-mesa">
+    <main>
+        <section id="selecao-mesa">
             <h2>Selecione a Mesa</h2>
-            <div id="mesas">
+            <div class="mesas">
                 <button onclick="selecionarMesa('mesa1')">Mesa 1</button>
                 <button onclick="selecionarMesa('mesa2')">Mesa 2</button>
                 <button onclick="selecionarMesa('mesa3')">Mesa 3</button>
@@ -23,9 +24,9 @@
             </div>
         </section>
 
-        <section id="form-cadastro" style="display: none;">
-            <h2>Cadastro de Lanches para <span id="mesa-selecionada"></span></h2>
-            <form onsubmit="adicionarPedido(); return false;">
+        <section id="form-cadastro" style="display:none;">
+            <h2 id="mesa-selecionada">Cadastro de Lanches</h2>
+            <form onsubmit="event.preventDefault(); adicionarPedido();">
                 <label for="nome-lanche">Nome do Lanche:</label>
                 <input type="text" id="nome-lanche" required>
 
@@ -36,14 +37,13 @@
             </form>
         </section>
 
-        <section id="pedidos-mesas">
-            <h2>Pedidos por Mesa</h2>
-            <div id="pedidos-mesa1"><h3>Mesa 1</h3></div>
-            <div id="pedidos-mesa2"><h3>Mesa 2</h3></div>
-            <div id="pedidos-mesa3"><h3>Mesa 3</h3></div>
-            <div id="pedidos-mesa4"><h3>Mesa 4</h3></div>
+        <section id="pedidos-por-mesa">
+            <div id="pedidos-mesa1"></div>
+            <div id="pedidos-mesa2"></div>
+            <div id="pedidos-mesa3"></div>
+            <div id="pedidos-mesa4"></div>
         </section>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>
