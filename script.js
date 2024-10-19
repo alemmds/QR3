@@ -1,99 +1,90 @@
-// Inicializando variáveis para armazenar os pedidos de cada mesa
-let pedidosMesas = {
+// Objeto para armazenar os pedidos de cada mesa
+let pedidosPorMesa = {
     mesa1: [],
     mesa2: [],
     mesa3: [],
     mesa4: []
 };
 
-let mesaSelecionada = null;
+// Variável para armazenar a mesa selecionada
+let mesaSelecionada = "";
 
-// Função para selecionar uma mesa e exibir o formulário de cadastro
+// Função para selecionar a mesa e exibir o formulário de cadastro
 function selecionarMesa(mesa) {
     mesaSelecionada = mesa;
+
+    // Atualiza o texto da mesa selecionada
     document.getElementById('mesa-selecionada').textContent = `Mesa ${mesa.replace('mesa', '')}`;
-    document.getElementById('form-cadastro').style.display = 'block'; // Exibir formulário
+
+    // Exibe o formulário de cadastro de lanches
+    document.getElementById('form-cadastro').style.display = 'block';
 }
 
-// Função para adicionar um pedido à mesa selecionada
+// Função para adicionar o pedido à mesa selecionada
 function adicionarPedido() {
-    if (!mesaSelecionada) {
-        alert('Por favor, selecione uma mesa.');
+    if (mesaSelecionada === "") {
+        alert("Selecione uma mesa primeiro!");
         return;
     }
 
-    let nomeLanche = document.getElementById('nome-lanche').value;
-    let valorLanche = parseFloat(document.getElementById('valor-lanche').value);
+    // Obtém os valores inseridos no formulário
+    const nomeLanche = document.getElementById('nome-lanche').value;
+    const valorLanche = parseFloat(document.getElementById('valor-lanche').value);
 
-    if (nomeLanche && valorLanche) {
-        let novoPedido = {
-            item: nomeLanche,
-            valor: valorLanche,
-            quantidade: 1
-        };
-
-        pedidosMesas[mesaSelecionada].push(novoPedido);
-        atualizarPedidos();
-        limparFormulario();
-    } else {
-        alert('Preencha os campos corretamente.');
+    if (nomeLanche === "" || isNaN(valorLanche)) {
+        alert("Preencha todos os campos corretamente!");
+        return;
     }
-}
 
-// Função para atualizar a exibição dos pedidos por mesa
-function atualizarPedidos() {
-    Object.keys(pedidosMesas).forEach(mesa => {
-        let pedidoLista = document.getElementById(`pedidos-${mesa}`);
-        pedidoLista.innerHTML = '';
-
-        pedidosMesas[mesa].forEach(pedido => {
-            pedidoLista.innerHTML += `<p>${pedido.item}: R$${pedido.valor.toFixed(2)}</p>`;
-        });
+    // Adiciona o pedido ao array da mesa selecionada
+    pedidosPorMesa[mesaSelecionada].push({
+        nome: nomeLanche,
+        valor: valorLanche
     });
-}
 
-// Função para limpar o formulário de cadastro
-function limparFormulario() {
+    // Atualiza a exibição dos pedidos
+    exibirPedidosMesa(mesaSelecionada);
+
+    // Limpa os campos do formulário após adicionar
     document.getElementById('nome-lanche').value = '';
     document.getElementById('valor-lanche').value = '';
 }
 
-// Função para carregar os pedidos da mesa na página de resumo
-function carregarResumoMesa() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const mesa = urlParams.get('mesa');
-    if (mesa && pedidosMesas[mesa].length > 0) {
-        let pedidoLista = document.getElementById('pedido-lista');
-        let totalGeral = 0;
-        pedidoLista.innerHTML = '';
+// Função para exibir os pedidos da mesa selecionada
+function exibirPedidosMesa(mesa) {
+    const divPedidos = document.getElementById(`pedidos-${mesa}`);
+    divPedidos.innerHTML = `<h3>Mesa ${mesa.replace('mesa', '')}</h3>`;
 
-        pedidosMesas[mesa].forEach(pedido => {
-            let totalItem = pedido.valor * pedido.quantidade;
-            totalGeral += totalItem;
-            pedidoLista.innerHTML += `<p>${pedido.item}: R$${pedido.valor.toFixed(2)} x ${pedido.quantidade} = R$${totalItem.toFixed(2)}</p>`;
-        });
+    let total = 0;
+    pedidosPorMesa[mesa].forEach((pedido, index) => {
+        divPedidos.innerHTML += `
+            <p>${index + 1}. ${pedido.nome} - R$ ${pedido.valor.toFixed(2)}</p>
+        `;
+        total += pedido.valor;
+    });
 
-        document.getElementById('total-geral').innerHTML = `<strong>Total: R$${totalGeral.toFixed(2)}</strong>`;
-    } else {
-        document.getElementById('pedido-lista').innerHTML = '<p>Nenhum produto cadastrado.</p>';
-    }
+    divPedidos.innerHTML += `<p><strong>Total: R$ ${total.toFixed(2)}</strong></p>`;
+
+    // Gera o QR code e exibe abaixo do total
+    gerarQRCode(mesa);
 }
 
-// Salvando os pedidos no localStorage (opcional para persistência)
-function salvarPedidos() {
-    localStorage.setItem('pedidosMesas', JSON.stringify(pedidosMesas));
+// Função para gerar o QR code do resumo da mesa
+function gerarQRCode(mesa) {
+    const divPedidos = document.getElementById(`pedidos-${mesa}`);
+    const qrCodeUrl = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa.replace('mesa', '')}`;
+
+    // Adiciona o QR code ao final da lista de pedidos
+    divPedidos.innerHTML += `
+        <div id="qr-code-${mesa}">
+            <p>Resumo da Mesa ${mesa.replace('mesa', '')}</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?data=${qrCodeUrl}&size=150x150" alt="QR Code da Mesa ${mesa.replace('mesa', '')}">
+        </div>
+    `;
 }
 
-// Carregando os pedidos salvos (opcional para persistência)
-function carregarPedidosSalvos() {
-    let pedidosSalvos = localStorage.getItem('pedidosMesas');
-    if (pedidosSalvos) {
-        pedidosMesas = JSON.parse(pedidosSalvos);
-        atualizarPedidos();
-    }
+// Função para limpar os pedidos da mesa selecionada
+function limparPedidosMesa(mesa) {
+    pedidosPorMesa[mesa] = [];
+    exibirPedidosMesa(mesa);
 }
-
-// Carregar pedidos ao iniciar a página
-window.onload = function() {
-    carregarPedidosSalvos();
-};
