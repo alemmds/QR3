@@ -20,7 +20,7 @@ main {
     padding: 20px;
 }
 
-h2 {
+h2, h3 {
     margin-bottom: 15px;
     color: #795548;
 }
@@ -66,14 +66,16 @@ form button:hover {
     background-color: #5D4037;
 }
 
-#pedidos-por-mesa {
+#pedidos-lista {
     margin-top: 20px;
 }
 
-#pedidos-por-mesa div {
-    margin-bottom: 20px;
+#qr-code {
+    margin-top: 20px;
 }
 
-#qr-code {
+#qr-code img {
     margin-top: 10px;
+    width: 150px;
+    height: 150px;
 }
