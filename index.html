@@ -3,49 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#795548">
-    <title>Panificadora Bacanga</title>
+    <meta name="description" content="Panificadora Bacanga - Gerenciamento de Pedidos">
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
+    <title>Panificadora Bacanga - Pedidos</title>
 </head>
 <body>
-    <header>
+    <div class="container">
         <h1>Panificadora Bacanga</h1>
-    </header>
 
-    <main>
-        <section id="selecao-mesa">
+        <div class="mesa-selecao">
             <h2>Selecione a Mesa</h2>
-            <div class="mesas">
-                <button onclick="selecionarMesa('mesa1')">Mesa 1</button>
-                <button onclick="selecionarMesa('mesa2')">Mesa 2</button>
-                <button onclick="selecionarMesa('mesa3')">Mesa 3</button>
-                <button onclick="selecionarMesa('mesa4')">Mesa 4</button>
-            </div>
-        </section>
+            <button onclick="selecionarMesa('mesa1')">Mesa 1</button>
+            <button onclick="selecionarMesa('mesa2')">Mesa 2</button>
+            <button onclick="selecionarMesa('mesa3')">Mesa 3</button>
+            <button onclick="selecionarMesa('mesa4')">Mesa 4</button>
+        </div>
 
-        <section id="form-cadastro" style="display:none;">
-            <h2 id="mesa-selecionada">Cadastro de Lanches</h2>
-            <form onsubmit="event.preventDefault(); adicionarPedido();">
-                <label for="nome-lanche">Nome do Lanche:</label>
-                <input type="text" id="nome-lanche" required>
+        <div id="form-cadastro" style="display:none;">
+            <h2 id="mesa-selecionada"></h2>
+            <label for="nome-lanche">Nome do Lanche:</label>
+            <input type="text" id="nome-lanche">
+            <label for="valor-lanche">Valor:</label>
+            <input type="number" id="valor-lanche">
+            <button onclick="adicionarPedido()">Cadastrar</button>
+            <button onclick="limparMesa()">Limpar</button> <!-- Botão Limpar -->
+        </div>
 
-                <label for="valor-lanche">Valor:</label>
-                <input type="number" id="valor-lanche" step="0.01" required>
+        <div id="pedidos-lista"></div>
 
-                <button type="submit">Confirmar</button>
-            </form>
-        </section>
-
-        <section id="pedidos-mesa">
-            <div id="pedidos-lista"></div>
-        </section>
-
-        <section id="qr-code" style="display:none;">
-            <h3>QR Code da Mesa</h3>
+        <div id="qr-code" style="display:none;">
+            <h2>QR Code para Resumo</h2>
             <div id="qr-code-imagem"></div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
