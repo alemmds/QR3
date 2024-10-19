@@ -51,22 +51,4 @@ function exibirPedidosMesa(mesa) {
         divPedidos.innerHTML += `
             <p>${index + 1}. ${pedido.nome} - R$ ${pedido.valor.toFixed(2)}</p>
         `;
-        total += pedido.valor;
-    });
-
-    divPedidos.innerHTML += `<p><strong>Total: R$ ${total.toFixed(2)}</strong></p>`;
-    gerarQRCode(mesa);
-}
-
-function gerarQRCode(mesa) {
-    const pedidos = pedidosPorMesa[mesa].map(pedido => `${pedido.nome}: R$${pedido.valor.toFixed(2)}`).join(", ");
-    const qrCodeUrl = `https://alemmds.github.io/QR3/resumo.html?mesa=${mesa.replace('mesa', '')}&pedidos=${encodeURIComponent(pedidos)}`;
-    const qrCodeDiv = document.getElementById('qr-code');
-    const qrCodeImgDiv = document.getElementById('qr-code-imagem');
-
-    qrCodeImgDiv.innerHTML = `
-        <img src="https://api.qrserver.com/v1/create-qr-code/?data=${qrCodeUrl}&size=150x150" alt="QR Code da Mesa ${mesa.replace('mesa', '')}">
-    `;
-
-    qrCodeDiv.style.display = 'block';
-}
+        total
