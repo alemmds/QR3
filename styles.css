@@ -1,43 +1,79 @@
-body {
-    font-family: Arial, sans-serif;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
-    text-align: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #795548;
     color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+main {
     padding: 20px;
-    margin-bottom: 20px;
 }
 
-.container {
-    padding: 20px;
+h2 {
+    margin-bottom: 15px;
+    color: #795548;
 }
 
-#mesa-resumo {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-    text-align: left;
+.mesas button {
+    background-color: #8D6E63;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-#mesa-resumo h2 {
-    color: #333;
+.mesas button:hover {
+    background-color: #6D4C41;
 }
 
-#pedido-lista p {
-    margin: 5px 0;
-    font-size: 18px;
+form {
+    display: flex;
+    flex-direction: column;
 }
 
-#total-geral {
+form label, form input, form button {
+    margin-bottom: 10px;
+}
+
+form input {
+    padding: 8px;
+    font-size: 16px;
+}
+
+form button {
+    padding: 10px;
+    background-color: #795548;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #5D4037;
+}
+
+#pedidos-por-mesa {
     margin-top: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #4CAF50;
+}
+
+#pedidos-por-mesa div {
+    margin-bottom: 20px;
+}
+
+#qr-code {
+    margin-top: 10px;
 }
